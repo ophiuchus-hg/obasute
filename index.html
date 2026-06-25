@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>冠着山(姨捨山) | 自然と文化遺産</title>
+    <meta
+      name="description"
+      content="冠着山(姨捨山)の自然、姨捨伝説、文化遺産、活動記録を紹介するWebサイト案です。"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header" aria-label="サイトヘッダー">
+      <a class="brand" href="#top" aria-label="冠着山トップへ">
+        <span class="brand-mark">冠</span>
+        <span>
+          <strong>冠着山(姨捨山)</strong>
+          <small>自然と文化遺産を保存する会</small>
+        </span>
+      </a>
+      <nav aria-label="主要メニュー">
+        <a href="#contents">掲載内容</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <img src="assets/kanmuriki-wide.jpeg" alt="田園越しに望む冠着山">
+        <div class="hero-copy">
+          <p class="eyebrow">信州さらしなの里</p>
+          <h1 id="hero-title">冠着山(姨捨山)</h1>
+          <p>
+            月の都「さらしな」の記憶、姨捨伝説、山麓の文化と自然を、
+            次の世代へつなぐための案内所です。
+          </p>
+        </div>
+      </section>
+
+      <section class="section" id="contents" aria-labelledby="contents-title">
+        <h2 id="contents-title" class="visually-hidden">掲載内容</h2>
+
+        <div class="content-browser">
+          <div class="topic-list" role="list" aria-label="掲載カテゴリ">
+            <button class="topic-button active" type="button" data-topic="book">冊子「冠着山」</button>
+            <button class="topic-button" type="button" data-topic="legend">姨捨伝説</button>
+            <button class="topic-button" type="button" data-topic="shrine">孝子観音と里宮</button>
+            <button class="topic-button" type="button" data-topic="college">冠着大学</button>
+            <button class="topic-button" type="button" data-topic="training">修験道体験</button>
+            <button class="topic-button" type="button" data-topic="events">イベント紹介</button>
+            <button class="topic-button" type="button" data-topic="people">山麓の人々</button>
+            <button class="topic-button" type="button" data-topic="links">リンク</button>
+          </div>
+
+          <article class="topic-panel" aria-live="polite">
+            <p class="panel-kicker" id="topicStatus" hidden>公開準備中</p>
+            <h3 id="topicTitle">冊子「冠着山」(姨捨山)</h3>
+            <div class="topic-banner" id="topicBanner" hidden></div>
+            <div id="topicBody">
+              冊子の全ページを掲載し、各記事へ直接移動できる入口を用意します。
+            </div>
+            <ul id="topicItems"></ul>
+            <a id="topicLink" class="button small" href="#contents" hidden>詳細を見る</a>
+            <div class="keyword-gallery" id="keywordGallery" hidden></div>
+            <div class="booklet-inline" id="bookletInline">
+              <div class="booklet-reader single-page" aria-live="polite">
+                <button class="booklet-side-control previous" type="button" id="prevSpread" aria-label="前のページへ">前へ</button>
+                <figure class="booklet-page" id="leftPageSlot">
+                  <img id="leftPageImage" alt="">
+                  <figcaption id="leftPageCaption"></figcaption>
+                </figure>
+                <figure class="booklet-page" id="rightPageSlot" hidden>
+                  <img id="rightPageImage" alt="">
+                  <figcaption id="rightPageCaption"></figcaption>
+                </figure>
+                <button class="booklet-side-control next" type="button" id="nextSpread" aria-label="次のページへ">次へ</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="image-lightbox" id="imageLightbox" aria-label="画像の拡大表示">
+      <button class="lightbox-close" type="button" aria-label="閉じる">×</button>
+      <figure>
+        <img id="lightboxImage" alt="">
+        <figcaption id="lightboxCaption"></figcaption>
+      </figure>
+    </dialog>
+
+    <footer>
+      <p>冠着山(姨捨山)の自然と文化遺産を保存する会</p>
+      <a href="#top">ページ上部へ</a>
+    </footer>
+
+    <script src="assets/booklet-pages/pages.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
