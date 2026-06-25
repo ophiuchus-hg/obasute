@@ -356,6 +356,34 @@ figcaption {
   padding-left: 20px;
 }
 
+.related-link-item {
+  padding-left: 0;
+  list-style: none;
+}
+
+.related-link-item a {
+  display: grid;
+  gap: 6px;
+  padding: 16px 18px;
+  background: #f8f6ef;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.related-link-item a:hover {
+  border-color: var(--forest);
+}
+
+.related-link-item strong {
+  color: var(--forest-dark);
+  font-size: 18px;
+}
+
+.related-link-item span {
+  color: var(--muted);
+}
+
 #topicBody {
   white-space: pre-line;
   line-height: 1.95;

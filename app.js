@@ -195,11 +195,15 @@ const topics = {
     status: "準備中",
     title: "リンク",
     body:
-      "他団体のホームページ、関連イベント、資料、QRコード掲載先へのリンクをまとめます。",
-    items: [
-      "関連団体へのリンク集",
-      "QRコードからのアクセス先",
-      "資料ダウンロードの整理",
+      "冠着山や姨捨、さらしなの里に関わる外部サイトを紹介します。",
+    items: [],
+    relatedLinks: [
+      {
+        title: "さらしなルネサンス",
+        url: "https://sarashina-r.com/",
+        description:
+          "日本遺産「月の都」となった長野県千曲市・さらしなの里の文化や活動を紹介するサイトです。",
+      },
     ],
     link: "#contents",
     label: "",
@@ -411,11 +415,30 @@ function renderTopic(key) {
   titleEl.textContent = topic.title;
   renderTopicBanner(topic);
   renderTopicBody(topic);
-  itemsEl.hidden = !topic.items.length;
+  itemsEl.hidden = !topic.items.length && !topic.relatedLinks?.length;
   itemsEl.replaceChildren(
     ...topic.items.map((item) => {
       const li = document.createElement("li");
       li.textContent = item;
+      return li;
+    }),
+    ...(topic.relatedLinks || []).map((item) => {
+      const li = document.createElement("li");
+      li.className = "related-link-item";
+
+      const anchor = document.createElement("a");
+      anchor.href = item.url;
+      anchor.target = "_blank";
+      anchor.rel = "noopener noreferrer";
+
+      const title = document.createElement("strong");
+      title.textContent = item.title;
+
+      const description = document.createElement("span");
+      description.textContent = item.description;
+
+      anchor.append(title, description);
+      li.append(anchor);
       return li;
     }),
   );
