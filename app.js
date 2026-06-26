@@ -1,17 +1,8 @@
-const topics = {
-  book: {
-    status: "資料掲載",
-    title: "冊子「冠着山」(姨捨山)",
-    body: "",
-    items: [],
-    link: "#contents",
-    label: "",
-    showBooklet: true,
-  },
-  legend: {
-    status: "音声あり",
-    title: "姨捨伝説",
-    body: `はあらかむかーしのことでやんす。
+// ==========================================
+// 1. データ定義 (既存データのリファイン)
+// ==========================================
+
+const legendData = `はあらかむかーしのことでやんす。
 ここらあたり一帯を治めておんなしたおとのさんは、なんしろとしよりが大(でえ)っきれえなおとのさんでな、ある日お役人がやって来て、こんな立て札立てた。
 ［六十になったとしよりは山に捨てること］
 「え、えーっ！な、なんだって、、？、おらんとこのとやんな、もうじき六十んなるけど、ずくああるだし、まーず達者で、うちん中大助かりだのに、なーんしてそんなこんしねきゃなんねえだか、、、。」
@@ -21,10 +12,10 @@ const topics = {
 母親のタミは、そりゃあ働きもんで、だれにでもやさしくて、その上村いちばんの物知りだった。
 多平はなかなかふんぎりがつかなくてな、一日(いちんち)延(の)ばしにして仕事にも身い入(へい)らね。ため息ばかっかりついて日が暮れた。そんなある晩のこんだった。
 「、、、なあ多平や。いつまでもぐずぐずしてるわけにゃいかねど。今夜っこそ、おらお山い連れてっとくれ、、、なんにも心配するこんねえよ。高(たけ)え山い登りゃあ、そんだけ　おてんとさんやお月さんに近づけるんだから、おらあ、喜んで行くだよ。、、さあさあおめえも早く支度しろやれ」
-「、、かやん、、、ふんとに申しやけねえ、、おらあ、、、おらあどんなば罰受けたってかまわねえ、、そんだが、みんなのこと考(かんげ)えたら、、、どうしりゃいいだか、、かやん、どうか勘弁してくれや、、、」
+「、、かやん、、、ふんとに申しやけねえ、、おらあ、、、おらあどんなば罰受けたってかまわねえ、、そんだが、みんなこと考(かんげ)えたら、、、どうしりゃいいだか、、かやん、どうか勘弁してくれや、、、」
 お月さんのあかりに照らされて、二人はそうっとうち出てった。
 多平はたみぉおぶって、ただ黙々と山道登ってった。
-ふと気いついたら、背中のがガサゴソガサゴソ動いてばっかりいる。
+背中のがガサゴソガサゴソ動いてばっかりいる。
 、、それに、ポキッポキッって、木の枝でもおしょってるような音もしてる。
 多平は、なーしてるんだや、そもったけんど、(ああ、かやんもせつなくてじっとしてらんねえんだな)って察して、なんにも聞かねで歩くしかねかった。
 どんくれ歩いただか、、いらい山奥い来ちまった。
@@ -54,32 +45,10 @@ const topics = {
 それから間もねく立て札が立った。
 [としよりを捨ててはならなぬ、いつまでも大切にすること]
 それからはどこんちでも　としよりぉ大事(て゛えじ)いして、みんな仲良く暮らせるようんなりやした。
-　おしまい！`,
-    items: [],
-    link: "#contents",
-    label: "",
-  },
-  shrine: {
-    title: "姨捨孝子観音と冠着神社の里宮",
-    body: "",
-    items: [],
-    link: "#contents",
-    label: "",
-    gallery: "shrine",
-  },
-  college: {
-    status: "記録整理中",
-    title: "冠着大学",
-    body: "",
-    items: [],
-    link: "#contents",
-    label: "",
-    gallery: "college",
-  },
-  training: {
-    status: "活動記録",
-    title: "冠着山修験道体験",
-    body: `冠着山の信仰
+　おしまい！`;
+
+const trainingData = {
+  body: `冠着山の信仰
 
 神々のおります霊峰はパワースポット
 
@@ -101,7 +70,7 @@ const topics = {
 
 ・石尊大権現――鎌倉時代に修験者が明徳寺の不動明王と冠着社の大己貴命を神仏習合神として勧請し、冠着山頂上に祀った（注連張石に合祀）。雨降山神（あふりやまの神）の信仰である。
 
-徳治年間（1306-1307）明徳寺の僧侶専慶（弟子の真雅とも）は、薬師の小堂を作った時、「薬師」・冠着社「月讀命」・「諏訪社」を明徳寺に冠着権現として奉祀した。この神は雨乞いの神として信仰され、冠着山頂上の石尊大権現信仰と合わせて、修験者による雨乞いの行事が冠着山と明徳寺で盛んに行われた。
+徳治年間（1306-1307）明徳寺の僧侶専慶（弟子の真雅とも）は、薬師の小堂を作った時、「薬師」・冠着社「月讀命」・「諏訪社」を明徳寺に冠着権現として奉祀した。この神は雨乞いの神として信仰され、冠着山頂上の石尊大権現信仰と合わせて、修験者による雨乞いの行事が冠着山と明徳寺で盛んで行われた。
 
 ・冠着権現社殿（冠着宮）が山頂に造営（宝暦4年1754年、天保10年1839年再建）。江戸時代まで神仏習合の権現（神）が祀られていたので権現社と呼称した。明治時代になり、神仏分離令（明治元年1868年）によって、権現社は冠着神社と改称。それとともに冠着神社は明徳寺を離れ、武水別神社の宮司が司祭となった。
 
@@ -140,99 +109,48 @@ const topics = {
 山の大好きな日本人のルーツは修験道の世界にあると言っても過言ではない。物があふれかえり高度に情報化された社会にあって、ストレスにさいなまれ心身のバランスを失いがちな現代人にとって、ホラ貝が鳴りわたる中、懺悔懺悔六根清浄「ざーんげざんげ、ろっこんしょうじょう」と大声を張り上げながら行う山伏修行は、きっと自分の中に新しい自分を発見する大きなきっかけとなるであろう。
 
 修験道体験イベントが、「冠着山の自然と文化遺産を保存する会」で実施されている。これは「六根清浄」と唱え、ほら貝を吹きながら登る登拝が主で、途中での法学という行事や頂上での護摩法要が行われる。`,
-    items: [],
-    link: "#contents",
-    label: "",
-    inlinePhotos: [
-      {
-        after: "地元羽尾五区の住民による集団登山",
-        src: "assets/shugendo/group.jpeg",
-        alt: "冠着山修験道体験の参加者集合写真",
-      },
-      {
-        after: "その開祖は役小角",
-        src: "assets/shugendo/tohai.jpeg",
-        alt: "冠着山修験道体験の登拝",
-      },
-      {
-        after: "修験道体験イベントが",
-        src: "assets/shugendo/goma.jpeg",
-        alt: "冠着山修験道体験の護摩法要",
-      },
-    ],
-  },
-  events: {
-    status: "随時更新",
-    title: "イベント紹介",
-    body:
-      "保存する会の催しだけでなく、他団体が行う関連イベントも掲載します。終了後は記録として整理できます。",
-    items: [
-      "開催前の案内を新着へ掲載",
-      "終了後は写真付きの記録へ移動",
-      "近隣団体のイベントも紹介",
-    ],
-    link: "#contents",
-    label: "",
-  },
-  people: {
-    status: "記事募集",
-    title: "冠着山麓の人々",
-    body: "",
-    items: [],
-    relatedLinks: [
-      {
-        title: "明徳寺",
-        description:
-          "冠着山信仰や修験道の歴史に関わる寺院です。冊子本文では、明徳寺の不動明王と冠着社の大己貴命が神仏習合神として勧請され、冠着山頂上に石尊大権現が祀られたこと、また明徳寺が修験者の拠り所であったことが紹介されています。",
-      },
-      {
-        title: "プレイファームずくなし",
-        description:
-          "冠着山の麓「さらしなの里」にある体験型コミュニティ農園です。自然栽培の野菜づくりや自然養蜂を中心に、味噌づくり、稲作、講座、ワークショップなどを行い、遊びながら学び、食を体験できる場として活動しています。",
-      },
-      {
-        title: "ギター工房「上水」",
-        url: "assets/people/homepage-articles-continued.pdf",
-        description:
-          "冠着山の麓にあるギター工房を紹介する記事です。姨捨の棚田の傍らで育った上水清さんが、手作りギターの制作に取り組む歩みや、工房を訪れる人々との交流、ギター製作への思いを掲載しています。",
-      },
-    ],
-    link: "#contents",
-    label: "",
-  },
-  links: {
-    status: "準備中",
-    title: "リンク",
-    body:
-      "冠着山や姨捨、さらしなの里に関わる外部サイトを紹介します。",
-    items: [],
-    relatedLinks: [
-      {
-        title: "さらしなルネサンス",
-        description:
-          "日本遺産「月の都」となった長野県千曲市・さらしなの里の文化や活動を紹介するサイトです。",
-      },
-    ],
-    link: "#contents",
-    label: "",
-  },
+  inlinePhotos: [
+    {
+      after: "地元羽尾五区の住民による集団登山",
+      src: "assets/shugendo/group.jpeg",
+      alt: "冠着山修験道体験の参加者集合写真",
+    },
+    {
+      after: "その開祖は役小角",
+      src: "assets/shugendo/tohai.jpeg",
+      alt: "冠着山修験道体験の登拝",
+    },
+    {
+      after: "修験道体験イベントが",
+      src: "assets/shugendo/goma.jpeg",
+      alt: "冠着山修験道体験の護摩法要",
+    },
+  ],
 };
 
-const buttons = document.querySelectorAll(".topic-button");
-const statusEl = document.querySelector("#topicStatus");
-const titleEl = document.querySelector("#topicTitle");
-const topicBanner = document.querySelector("#topicBanner");
-const bodyEl = document.querySelector("#topicBody");
-const itemsEl = document.querySelector("#topicItems");
-const linkEl = document.querySelector("#topicLink");
-const bookletInline = document.querySelector("#bookletInline");
-const keywordGallery = document.querySelector("#keywordGallery");
-const topicPanel = document.querySelector(".topic-panel");
-const imageLightbox = document.querySelector("#imageLightbox");
-const lightboxImage = document.querySelector("#lightboxImage");
-const lightboxCaption = document.querySelector("#lightboxCaption");
-const lightboxClose = document.querySelector(".lightbox-close");
-let currentTopicKey = "book";
+const peopleData = [
+  {
+    title: "明徳寺",
+    description: "冠着山信仰や修験道の歴史に関わる寺院です。明徳寺の不動明王と冠着社の大己貴命が神仏習合神として勧請され、冠着山頂上に石尊大権現が祀られたこと、また明徳寺が修験者の拠り所であったことが紹介されています。",
+  },
+  {
+    title: "プレイファームずくなし",
+    description: "冠着山の麓「さらしなの里」にある体験型コミュニティ農園です。自然栽培の野菜づくりや自然養蜂を中心に、味噌づくり、稲作、講座、ワークショップなどを行い、遊びながら学び、食を体験できる場として活動しています。",
+  },
+  {
+    title: "ギター工房「上水」",
+    url: "assets/people/homepage-articles-continued.pdf",
+    description: "冠着山の麓にあるギター工房を紹介する記事です。姨捨の棚田の傍らで育った上水清さんが、手作りギターの制作に取り組む歩みや、工房を訪れる人々との交流、ギター製作への思いを掲載しています。",
+  }
+];
+
+const linksData = [
+  {
+    title: "さらしなルネサンス",
+    url: "https://sarashina-r.com", // 外部URLに変更。必要に応じて調整
+    description: "日本遺産「月の都」となった長野県千曲市・さらしなの里の文化や活動を紹介するサイトです。",
+  }
+];
 
 const galleries = {
   college: [
@@ -310,10 +228,9 @@ const galleries = {
     },
     {
       keyword: "句碑",
-      note: "山頂の句碑。",
-      detail: "更級や姨捨山の月ぞこれ　高浜虚子\n（昭和三二年九月建碑）",
+      note: "明治三十年前後に建立された、郷嶺山（冠着山）にある句碑と歌碑の記録。",
       photos: [
-        { src: "assets/shrine/haiku-monument.jpeg", alt: "山頂の句碑" },
+        { src: "assets/shrine/haiku-monument.jpg", alt: "郷嶺山の句碑と歌碑" },
       ],
     },
     {
@@ -327,79 +244,199 @@ const galleries = {
   ],
 };
 
-function createPhotoButton(photo, className = "gallery-image-button") {
-  const button = document.createElement("button");
-  button.type = "button";
-  button.className = className;
-  button.setAttribute("aria-label", `${photo.alt}を拡大表示`);
+// ==========================================
+// 2. DOM構築と初期描画
+// ==========================================
 
-  const image = document.createElement("img");
-  image.src = photo.src;
-  image.alt = photo.alt;
-  image.loading = "lazy";
-
-  button.append(image);
-  button.addEventListener("click", () => openImageLightbox(photo));
-  return button;
-}
-
-function createInlinePhoto(photo) {
-  const figure = document.createElement("figure");
-  figure.className = "topic-inline-photo";
-  figure.append(createPhotoButton(photo, "topic-photo-button"));
-  return figure;
-}
-
-function renderTopicBanner(topic) {
-  if (!topicBanner) return;
-
-  topicBanner.replaceChildren();
-  topicBanner.hidden = !topic.banner;
-  if (!topic.banner) return;
-
-  topicBanner.append(createPhotoButton(topic.banner, "topic-banner-button"));
-}
-
-function renderTopicBody(topic) {
-  if (!bodyEl) return;
-
-  bodyEl.replaceChildren();
-  bodyEl.hidden = !topic.body;
-  if (!topic.body) return;
-
-  if (!topic.inlinePhotos?.length) {
-    bodyEl.textContent = topic.body;
-    return;
+document.addEventListener("DOMContentLoaded", () => {
+  // ヒーロー画像のKen Burns効果の開始
+  const heroImage = document.querySelector("#heroImage");
+  if (heroImage) {
+    heroImage.classList.add("kenburns-active");
   }
 
-  const pendingPhotos = [...topic.inlinePhotos];
-  const fragments = topic.body.split(/\n{2,}/);
-  fragments.forEach((fragment) => {
-    const paragraph = document.createElement("p");
-    paragraph.textContent = fragment;
-    bodyEl.append(paragraph);
+  // 1. 姨捨伝説の描画
+  renderLegend();
 
-    const matchedPhotoIndex = pendingPhotos.findIndex((photo) => fragment.includes(photo.after));
-    if (matchedPhotoIndex >= 0) {
-      const [photo] = pendingPhotos.splice(matchedPhotoIndex, 1);
-      bodyEl.append(createInlinePhoto(photo));
+  // 2. 里宮ギャラリーの描画
+  renderGallery("shrine", "#shrineGallery");
+
+  // 3. 修験道の描画
+  renderTraining();
+
+  // 4. 冠着大学ギャラリーの描画
+  renderGallery("college", "#collegeGallery", "college");
+
+  // 5. 人々の描画
+  renderPeopleAndLinks();
+
+  // 6. ブックレットリーダーのセットアップ
+  initBooklet();
+
+  // 7. スティッキーヘッダー & Scrollspyのセットアップ
+  initScrollspy();
+
+  // モバイルメニューの開閉制御
+  const menuTrigger = document.querySelector("#menuTrigger");
+  const siteNav = document.querySelector("#siteNav");
+  const siteHeader = document.querySelector("#siteHeader");
+
+  if (menuTrigger && siteNav && siteHeader) {
+    menuTrigger.addEventListener("click", () => {
+      const isExpanded = menuTrigger.getAttribute("aria-expanded") === "true";
+      menuTrigger.setAttribute("aria-expanded", !isExpanded);
+      menuTrigger.classList.toggle("active");
+      siteNav.classList.toggle("open");
+      siteHeader.classList.toggle("menu-open");
+    });
+
+    // リンクをクリックした際に自動で閉じる
+    const navLinks = siteNav.querySelectorAll(".nav-link");
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        menuTrigger.setAttribute("aria-expanded", "false");
+        menuTrigger.classList.remove("active");
+        siteNav.classList.remove("open");
+        siteHeader.classList.remove("menu-open");
+      });
+    });
+  }
+
+  // ヒーローのスクロールパララックス効果
+  const heroMoon = document.querySelector("#heroMoon");
+  const heroCopy = document.querySelector(".hero-copy");
+
+  window.addEventListener("scroll", () => {
+    const scrolled = window.scrollY;
+    if (scrolled < window.innerHeight) {
+      if (heroImage) {
+        heroImage.style.transform = `scale(1.05) translateY(${scrolled * 0.12}px)`;
+      }
+      if (heroMoon) {
+        heroMoon.style.transform = `translateY(${scrolled * -0.22}px)`;
+      }
+      if (heroCopy) {
+        heroCopy.style.transform = `translateY(${scrolled * 0.18}px)`;
+        heroCopy.style.opacity = 1 - (scrolled / (window.innerHeight * 0.8));
+      }
     }
   });
 
-  pendingPhotos.forEach((photo) => bodyEl.append(createInlinePhoto(photo)));
+  // 各セクションのスクロール演出
+  const revealSections = document.querySelectorAll(".section-content");
+  
+  // JSが有効な場合にのみ初期非表示化クラスを適用
+  revealSections.forEach((section, index) => {
+    // セクションごとに左右交互のスライド方向を設定
+    if (index % 2 === 0) {
+      section.classList.add("reveal-from-left");
+    } else {
+      section.classList.add("reveal-from-right");
+    }
+
+    // 見出し（h2）に演出クラスを適用
+    const heading = section.querySelector("h2");
+    if (heading) heading.classList.add("reveal-title");
+
+    // リード文に演出クラスを適用
+    const lead = section.querySelector(".section-lead");
+    if (lead) lead.classList.add("reveal-child");
+
+    // カード系要素に演出クラスを適用
+    section.querySelectorAll(".keyword-block, .related-link-item, .links-box").forEach((card) => {
+      card.classList.add("reveal-card");
+    });
+
+    // 写真系要素に演出クラスを適用
+    section.querySelectorAll(".topic-inline-photo").forEach((photo) => {
+      photo.classList.add("reveal-photo");
+    });
+  });
+
+  // セクション全体のスライドイン（IntersectionObserver）
+  const sectionObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("reveal");
+        entry.target.classList.remove("reveal-from-left", "reveal-from-right", "reveal-init");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.05,
+    rootMargin: "0px 0px -50px 0px"
+  });
+
+  revealSections.forEach((section) => {
+    sectionObserver.observe(section);
+  });
+
+  // 子要素の時差つきフェードイン（IntersectionObserver）
+  const childObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // 同じセクション内の要素を収集し、インデックスに応じたディレイを付与
+        const section = entry.target.closest(".section-content");
+        if (section) {
+          const siblings = Array.from(section.querySelectorAll(".reveal-child:not(.visible), .reveal-title:not(.visible), .reveal-card:not(.visible), .reveal-photo:not(.visible)"));
+          const idx = siblings.indexOf(entry.target);
+          const delay = Math.max(0, idx) * 120; // 120ms間隔で順番に表示
+          setTimeout(() => {
+            entry.target.classList.add("visible");
+          }, delay);
+        } else {
+          entry.target.classList.add("visible");
+        }
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.05,
+    rootMargin: "0px 0px -30px 0px"
+  });
+
+  document.querySelectorAll(".reveal-child, .reveal-title, .reveal-card, .reveal-photo").forEach((el) => {
+    childObserver.observe(el);
+  });
+
+  // セクション内コンテンツのパララックス効果（スクロール速度差）
+  window.addEventListener("scroll", () => {
+    const scrollY = window.scrollY;
+    document.querySelectorAll(".section-container").forEach((container) => {
+      const rect = container.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      // 要素が画面内にある場合のみ処理
+      if (rect.top < viewportHeight && rect.bottom > 0) {
+        const progress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+        const offset = (progress - 0.5) * 20; // -10px 〜 +10px の微妙な移動
+        const heading = container.querySelector("h2");
+        if (heading) {
+          heading.style.transform = `translateY(${offset * -0.5}px)`;
+        }
+      }
+    });
+  }, { passive: true });
+});
+
+// 伝説のテキスト描画
+function renderLegend() {
+  const legendBody = document.querySelector("#legendBody");
+  if (!legendBody) return;
+  legendBody.textContent = legendData;
 }
 
-function renderKeywordGallery(name) {
-  const sections = galleries[name] || [];
-  if (!keywordGallery) return;
+// ギャラリーの共通描画
+function renderGallery(galleryKey, containerSelector, extraClass = "") {
+  const container = document.querySelector(containerSelector);
+  const sections = galleries[galleryKey] || [];
+  if (!container || !sections.length) return;
 
-  keywordGallery.hidden = !sections.length;
-  keywordGallery.classList.toggle("college-gallery", name === "college");
-  keywordGallery.replaceChildren(
+  container.replaceChildren(
     ...sections.map((section) => {
       const article = document.createElement("article");
       article.className = "keyword-block";
-      article.classList.toggle("document-block", section.layout === "document");
+      if (extraClass) article.classList.add(`${extraClass}-block`);
+      if (section.layout === "document") article.classList.add("document-block");
 
       const header = document.createElement("div");
       header.className = "keyword-block-header";
@@ -415,154 +452,204 @@ function renderKeywordGallery(name) {
       detail.textContent = section.detail || "";
       detail.hidden = !section.detail;
 
+      header.append(title, note, detail);
+
       const photos = document.createElement("div");
       photos.className = `keyword-photos count-${section.photos.length}`;
+      if (extraClass === "college") photos.classList.add("college-photos");
 
       photos.append(
         ...section.photos.map((photo) => {
           const figure = document.createElement("figure");
-          figure.append(createPhotoButton(photo));
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "gallery-image-button";
+          button.setAttribute("aria-label", `${photo.alt}を拡大表示`);
+
+          const img = document.createElement("img");
+          img.src = photo.src;
+          img.alt = photo.alt;
+          img.loading = "lazy";
+
+          button.append(img);
+          button.addEventListener("click", () => openLightbox(photo, galleryKey));
+          figure.append(button);
           return figure;
-        }),
+        })
       );
 
-      header.append(title, note, detail);
       article.append(header, photos);
       return article;
-    }),
+    })
   );
 }
 
-function openImageLightbox(photo) {
-  if (!imageLightbox || !lightboxImage || !lightboxCaption) return;
+// 修験道体験のテキスト・インライン写真描画
+function renderTraining() {
+  const container = document.querySelector("#trainingBody");
+  if (!container) return;
 
-  lightboxImage.src = photo.src;
-  lightboxImage.alt = photo.alt;
-  lightboxCaption.textContent = photo.alt;
-  if (typeof imageLightbox.showModal === "function") {
-    imageLightbox.showModal();
-  } else {
-    imageLightbox.setAttribute("open", "");
+  const pendingPhotos = [...trainingData.inlinePhotos];
+  const fragments = trainingData.body.split(/\n{2,}/);
+
+  fragments.forEach((fragment) => {
+    // タイトルの判定
+    if (fragment.startsWith("冠着山の") || fragment.startsWith("冠着神社に合祀") || fragment.startsWith("蘇った冠着山")) {
+      const title = document.createElement("h3");
+      title.textContent = fragment;
+      container.append(title);
+      return;
+    }
+
+    const paragraph = document.createElement("p");
+    paragraph.textContent = fragment;
+    container.append(paragraph);
+
+    // インライン写真のマッチング
+    const matchedPhotoIndex = pendingPhotos.findIndex((photo) => fragment.includes(photo.after));
+    if (matchedPhotoIndex >= 0) {
+      const [photo] = pendingPhotos.splice(matchedPhotoIndex, 1);
+      container.append(createInlinePhotoElement(photo));
+    }
+  });
+
+  // 残りの写真を末尾に追加
+  pendingPhotos.forEach((photo) => container.append(createInlinePhotoElement(photo)));
+}
+
+function createInlinePhotoElement(photo) {
+  const figure = document.createElement("figure");
+  figure.className = "topic-inline-photo";
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "topic-photo-button";
+  button.setAttribute("aria-label", `${photo.alt}を拡大表示`);
+
+  const img = document.createElement("img");
+  img.src = photo.src;
+  img.alt = photo.alt;
+  img.loading = "lazy";
+
+  button.append(img);
+  button.addEventListener("click", () => openLightbox(photo, "training"));
+  figure.append(button);
+  return figure;
+}
+
+// 人々とリンクの描画
+function renderPeopleAndLinks() {
+  const peopleContainer = document.querySelector("#peopleItems");
+  const linksContainer = document.querySelector("#linksItems");
+
+  if (peopleContainer) {
+    peopleContainer.replaceChildren(
+      ...peopleData.map((item) => {
+        const li = document.createElement("li");
+        li.className = "related-link-item";
+
+        const container = item.url ? document.createElement("a") : document.createElement("div");
+        if (item.url) {
+          container.href = item.url;
+          container.target = "_blank";
+          container.rel = "noopener noreferrer";
+        } else {
+          container.className = "related-link-static";
+        }
+
+        const title = document.createElement("strong");
+        title.textContent = item.title;
+
+        const desc = document.createElement("span");
+        desc.textContent = item.description;
+
+        container.append(title, desc);
+        li.append(container);
+        return li;
+      })
+    );
   }
-}
 
-function closeImageLightbox() {
-  if (!imageLightbox) return;
-  if (typeof imageLightbox.close === "function" && imageLightbox.open) {
-    imageLightbox.close();
-  } else {
-    imageLightbox.removeAttribute("open");
-  }
-}
+  if (linksContainer) {
+    linksContainer.replaceChildren(
+      ...linksData.map((item) => {
+        const li = document.createElement("li");
+        li.className = "related-link-item";
 
-lightboxClose?.addEventListener("click", closeImageLightbox);
-imageLightbox?.addEventListener("click", (event) => {
-  if (event.target === imageLightbox) closeImageLightbox();
-});
-
-function stabilizePanelHeightForSwitch(key) {
-  if (!topicPanel || key === currentTopicKey) return false;
-
-  const rect = topicPanel.getBoundingClientRect();
-  const oldHeight = topicPanel.offsetHeight;
-  const isDeepInsidePanel = rect.top < 0 && oldHeight > window.innerHeight;
-  if (!isDeepInsidePanel) return false;
-
-  topicPanel.style.minHeight = `${oldHeight}px`;
-  return true;
-}
-
-function releasePanelHeightAfterScroll() {
-  if (!topicPanel) return;
-
-  window.setTimeout(() => {
-    topicPanel.style.minHeight = "";
-  }, 900);
-}
-
-function renderTopic(key, options = {}) {
-  const topic = topics[key];
-  if (!topic) return;
-
-  const shouldStabilize = options.stabilizeScroll ? stabilizePanelHeightForSwitch(key) : false;
-
-  statusEl.textContent = "";
-  statusEl.hidden = true;
-  titleEl.textContent = topic.title;
-  renderTopicBanner(topic);
-  renderTopicBody(topic);
-  itemsEl.hidden = !topic.items.length && !topic.relatedLinks?.length;
-  itemsEl.replaceChildren(
-    ...topic.items.map((item) => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      return li;
-    }),
-    ...(topic.relatedLinks || []).map((item) => {
-      const li = document.createElement("li");
-      li.className = "related-link-item";
-
-      const container = item.url ? document.createElement("a") : document.createElement("div");
-      if (item.url) {
+        const container = document.createElement("a");
         container.href = item.url;
         container.target = "_blank";
         container.rel = "noopener noreferrer";
-      } else {
-        container.className = "related-link-static";
-      }
 
-      const title = document.createElement("strong");
-      title.textContent = item.title;
+        const title = document.createElement("strong");
+        title.textContent = item.title;
 
-      const description = document.createElement("span");
-      description.textContent = item.description;
+        const desc = document.createElement("span");
+        desc.textContent = item.description;
 
-      container.append(title, description);
-      li.append(container);
-      return li;
-    }),
-  );
-  linkEl.href = topic.link;
-  linkEl.textContent = topic.label;
-  linkEl.hidden = !topic.label;
-  if (bookletInline) {
-    bookletInline.hidden = !topic.showBooklet;
-  }
-  renderKeywordGallery(topic.gallery);
-
-  buttons.forEach((button) => {
-    button.classList.toggle("active", button.dataset.topic === key);
-  });
-
-  currentTopicKey = key;
-
-  if (shouldStabilize) {
-    requestAnimationFrame(() => {
-      topicPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-      releasePanelHeightAfterScroll();
-    });
+        container.append(title, desc);
+        li.append(container);
+        return li;
+      })
+    );
   }
 }
 
-buttons.forEach((button) => {
-  button.addEventListener("click", () => renderTopic(button.dataset.topic, { stabilizeScroll: true }));
-});
-
-renderTopic("book");
+// ==========================================
+// 3. ブックレットリーダーのコントロール
+// ==========================================
 
 const bookletPages = Array.isArray(window.BOOKLET_PAGES) ? window.BOOKLET_PAGES : [];
-const bookletReader = document.querySelector(".booklet-reader");
-const leftPageSlot = document.querySelector("#leftPageSlot");
-const rightPageSlot = document.querySelector("#rightPageSlot");
-const leftPageImage = document.querySelector("#leftPageImage");
-const rightPageImage = document.querySelector("#rightPageImage");
-const leftPageCaption = document.querySelector("#leftPageCaption");
-const rightPageCaption = document.querySelector("#rightPageCaption");
-const prevSpreadButton = document.querySelector("#prevSpread");
-const nextSpreadButton = document.querySelector("#nextSpread");
 let currentPageIndex = 0;
 
+function initBooklet() {
+  const prevButton = document.querySelector("#prevSpread");
+  const nextButton = document.querySelector("#nextSpread");
+  const thumbnailContainer = document.querySelector("#bookletThumbnails");
+
+  if (!bookletPages.length) return;
+
+  // サムネイルの描画
+  if (thumbnailContainer) {
+    thumbnailContainer.replaceChildren(
+      ...bookletPages.map((page, index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.setAttribute("aria-label", `ページ ${index + 1} へ移動`);
+
+        const img = document.createElement("img");
+        img.src = page.src;
+        img.alt = `ページ ${index + 1} のミニ画像`;
+        img.loading = "lazy";
+
+        const span = document.createElement("span");
+        span.textContent = `P. ${index + 1}`;
+
+        btn.append(img, span);
+        btn.addEventListener("click", () => {
+          goToPage(index);
+        });
+        return btn;
+      })
+    );
+  }
+
+  prevButton?.addEventListener("click", () => movePage(-1));
+  nextButton?.addEventListener("click", () => movePage(1));
+
+  // キーボード操作のリスナー
+  document.addEventListener("keydown", (event) => {
+    const bookletArea = document.querySelector("#bookletInline");
+    if (!bookletArea || !bookletArea.matches(":hover")) return;
+    if (event.key === "ArrowLeft") movePage(-1);
+    if (event.key === "ArrowRight") movePage(1);
+  });
+
+  renderBooklet();
+}
+
 function shouldShowSpread() {
+  // 常に1ページ表示
   return false;
 }
 
@@ -570,44 +657,101 @@ function clampPageIndex(index) {
   return Math.min(Math.max(index, 0), Math.max(bookletPages.length - 1, 0));
 }
 
-function pageNumberFor(index) {
-  return index + 1;
+function renderBooklet() {
+  const bookletReader = document.querySelector(".booklet-reader");
+  const leftPageSlot = document.querySelector("#leftPageSlot");
+  const rightPageSlot = document.querySelector("#rightPageSlot");
+  const leftPageImage = document.querySelector("#leftPageImage");
+  const rightPageImage = document.querySelector("#rightPageImage");
+  const leftPageCaption = document.querySelector("#leftPageCaption");
+  const rightPageCaption = document.querySelector("#rightPageCaption");
+  const prevButton = document.querySelector("#prevSpread");
+  const nextButton = document.querySelector("#nextSpread");
+
+  if (!bookletReader || !bookletPages.length) return;
+
+  currentPageIndex = clampPageIndex(currentPageIndex);
+  const isSpread = shouldShowSpread();
+
+  // 見開き表示の場合のインデックス算出
+  // 表紙（0）は1枚。1ページ目以降は、奇数が左、偶数が右。
+  let leftIndex = currentPageIndex;
+  let rightIndex = -1;
+
+  if (isSpread) {
+    // 現在のインデックスが偶数の場合、それは右側のページなので、左側（奇数）を1つ前に調整
+    if (currentPageIndex % 2 === 0) {
+      leftIndex = currentPageIndex - 1;
+      rightIndex = currentPageIndex;
+    } else {
+      leftIndex = currentPageIndex;
+      rightIndex = currentPageIndex + 1 < bookletPages.length ? currentPageIndex + 1 : -1;
+    }
+  }
+
+  // スロットへのページ割り当て
+  const leftPage = bookletPages[leftIndex];
+  const rightPage = rightIndex >= 0 ? bookletPages[rightIndex] : null;
+
+  setPageSlot(leftPageSlot, leftPageImage, leftPageCaption, leftPage, leftIndex);
+  setPageSlot(rightPageSlot, rightPageImage, rightPageCaption, rightPage, rightIndex);
+
+  // 見開き時のリーダー幅クラス適用
+  bookletReader.classList.toggle("single-page", !isSpread || !rightPage);
+
+  // ボタンの有効／無効制御
+  if (prevButton) prevButton.disabled = currentPageIndex === 0;
+  if (nextButton) {
+    nextButton.disabled = isSpread && rightIndex >= 0 
+      ? rightIndex >= bookletPages.length - 1
+      : currentPageIndex >= bookletPages.length - 1;
+  }
+
+  // サムネイルのアクティブ状態の更新
+  const thumbnails = document.querySelectorAll("#bookletThumbnails button");
+  thumbnails.forEach((thumb, idx) => {
+    const isActive = idx === leftIndex || (rightIndex >= 0 && idx === rightIndex);
+    thumb.classList.toggle("active", isActive);
+
+    if (isActive && thumb.scrollIntoView) {
+      // スムーズにスクロールさせて可視範囲に入れる
+      thumb.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    }
+  });
 }
 
-function setSlot(slot, image, caption, page, index) {
+function setPageSlot(slot, image, caption, page, index) {
+  if (!slot || !image || !caption) return;
+
   if (!page) {
     slot.hidden = true;
     image.removeAttribute("src");
     image.alt = "";
     caption.textContent = "";
+    image.onclick = null;
+    image.style.cursor = "default";
     return;
   }
 
   slot.hidden = false;
-  image.src = page.src;
-  image.alt = page.alt || `冊子「冠着山」 ${pageNumberFor(index)}ページ`;
-  caption.textContent = `${page.title || `ページ ${pageNumberFor(index)}`} / ${bookletPages.length}`;
-}
+  
+  // アニメーション用のクラス適用
+  image.style.opacity = 0;
+  setTimeout(() => {
+    image.src = page.src;
+    image.alt = page.alt || `冊子「冠着山」 ${index + 1}ページ`;
+    caption.textContent = `P. ${index + 1} / ${bookletPages.length}`;
+    image.style.opacity = 1;
+    image.style.cursor = "zoom-in";
 
-function renderBooklet() {
-  if (!bookletReader || !bookletPages.length) {
-    if (leftPageCaption) leftPageCaption.textContent = "ページ画像がありません";
-    return;
-  }
-
-  currentPageIndex = clampPageIndex(currentPageIndex);
-  const spread = shouldShowSpread();
-  const leftIndex = currentPageIndex;
-  const rightIndex = -1;
-  const leftPage = bookletPages[leftIndex];
-  const rightPage = rightIndex >= 0 ? bookletPages[rightIndex] : null;
-
-  bookletReader.classList.toggle("single-page", !spread || !rightPage);
-  setSlot(leftPageSlot, leftPageImage, leftPageCaption, leftPage, leftIndex);
-  setSlot(rightPageSlot, rightPageImage, rightPageCaption, rightPage, rightIndex);
-
-  if (prevSpreadButton) prevSpreadButton.disabled = currentPageIndex === 0;
-  if (nextSpreadButton) nextSpreadButton.disabled = currentPageIndex >= bookletPages.length - 1;
+    // クリック時にライトボックスで拡大表示
+    image.onclick = () => {
+      openLightbox({
+        src: page.src,
+        alt: page.alt || `冊子「冠着山」 ${index + 1}ページ`
+      }, "booklet");
+    };
+  }, 50);
 }
 
 function goToPage(index) {
@@ -616,16 +760,190 @@ function goToPage(index) {
 }
 
 function movePage(direction) {
-  goToPage(currentPageIndex + direction);
+  const isSpread = shouldShowSpread();
+  // 見開きのときは2ページずつ、そうでないときは1ページずつ移動
+  let offset = direction;
+  if (isSpread) {
+    offset = direction * 2;
+  }
+  goToPage(currentPageIndex + offset);
 }
 
-prevSpreadButton?.addEventListener("click", () => movePage(-1));
-nextSpreadButton?.addEventListener("click", () => movePage(1));
+// ==========================================
+// 4. ライトボックスとスライドショー
+// ==========================================
 
-document.addEventListener("keydown", (event) => {
-  if (!document.querySelector("#bookletInline:hover")) return;
-  if (event.key === "ArrowLeft") movePage(-1);
-  if (event.key === "ArrowRight") movePage(1);
-});
+let activeGalleryPhotos = [];
+let currentPhotoIndex = 0;
 
-renderBooklet();
+function openLightbox(photo, galleryKey) {
+  const lightbox = document.querySelector("#imageLightbox");
+  const img = document.querySelector("#lightboxImage");
+  const caption = document.querySelector("#lightboxCaption");
+
+  if (!lightbox || !img || !caption) return;
+
+  // 対象ギャラリーの写真リストを取得
+  buildPhotoList(galleryKey, photo);
+
+  img.src = photo.src;
+  img.alt = photo.alt;
+  caption.textContent = photo.alt;
+
+  lightbox.showModal();
+  document.body.style.overflow = "hidden"; // スクロール防止
+
+  // イベントリスナーのセットアップ
+  setupLightboxNav();
+}
+
+function buildPhotoList(galleryKey, activePhoto) {
+  activeGalleryPhotos = [];
+  currentPhotoIndex = 0;
+
+  if (galleryKey === "training") {
+    activeGalleryPhotos = trainingData.inlinePhotos;
+  } else if (galleryKey === "booklet") {
+    // 冊子の全ページを対象にする
+    activeGalleryPhotos = bookletPages.map((page, idx) => ({
+      src: page.src,
+      alt: page.alt || `冊子「冠着山」 ${idx + 1}ページ / 全${bookletPages.length}ページ`
+    }));
+  } else if (galleries[galleryKey]) {
+    galleries[galleryKey].forEach((section) => {
+      activeGalleryPhotos.push(...section.photos);
+    });
+  }
+
+  currentPhotoIndex = activeGalleryPhotos.findIndex((p) => p.src === activePhoto.src);
+  if (currentPhotoIndex < 0) {
+    activeGalleryPhotos = [activePhoto];
+    currentPhotoIndex = 0;
+  }
+}
+
+function closeLightbox() {
+  const lightbox = document.querySelector("#imageLightbox");
+  if (!lightbox) return;
+
+  lightbox.close();
+  document.body.style.overflow = ""; // スクロール有効化
+}
+
+function setupLightboxNav() {
+  const prevBtn = document.querySelector("#prevLightbox");
+  const nextBtn = document.querySelector("#nextLightbox");
+  const closeBtn = document.querySelector(".lightbox-close");
+  const lightbox = document.querySelector("#imageLightbox");
+
+  if (!prevBtn || !nextBtn || !closeBtn || !lightbox) return;
+
+  // ナビゲーションボタンの表示・非表示
+  const hasMultiple = activeGalleryPhotos.length > 1;
+  prevBtn.style.display = hasMultiple ? "flex" : "none";
+  nextBtn.style.display = hasMultiple ? "flex" : "none";
+
+  // ボタンイベント（重複登録を防ぐため、一度クローンしてイベント再登録などをするか、毎回匿名関数にする）
+  prevBtn.onclick = (e) => {
+    e.stopPropagation();
+    navigateLightbox(-1);
+  };
+  nextBtn.onclick = (e) => {
+    e.stopPropagation();
+    navigateLightbox(1);
+  };
+  closeBtn.onclick = closeLightbox;
+  lightbox.onclick = (e) => {
+    if (e.target === lightbox) closeLightbox();
+  };
+
+  // キーボードナビゲーション
+  document.onkeydown = (e) => {
+    if (!lightbox.open) return;
+    if (e.key === "ArrowLeft" && hasMultiple) navigateLightbox(-1);
+    if (e.key === "ArrowRight" && hasMultiple) navigateLightbox(1);
+    if (e.key === "Escape") closeLightbox();
+  };
+}
+
+function navigateLightbox(direction) {
+  if (!activeGalleryPhotos.length) return;
+
+  currentPhotoIndex = (currentPhotoIndex + direction + activeGalleryPhotos.length) % activeGalleryPhotos.length;
+  const photo = activeGalleryPhotos[currentPhotoIndex];
+
+  const img = document.querySelector("#lightboxImage");
+  const caption = document.querySelector("#lightboxCaption");
+
+  if (img && caption) {
+    img.style.opacity = 0;
+    setTimeout(() => {
+      img.src = photo.src;
+      img.alt = photo.alt;
+      caption.textContent = photo.alt;
+      img.style.opacity = 1;
+    }, 100);
+  }
+}
+
+// ==========================================
+// 5. Scrollspy と スティッキーヘッダー
+// ==========================================
+
+function initScrollspy() {
+  const sections = document.querySelectorAll(".section-content, .hero");
+  const navLinks = document.querySelectorAll(".nav-link");
+  const header = document.querySelector("#siteHeader");
+
+  window.addEventListener("scroll", () => {
+    let currentId = "";
+    const scrollPosition = window.scrollY + 100; // ヘッダーの高さを考慮したオフセット
+
+    // ヘッダーのスクロール影エフェクト
+    if (header) {
+      if (window.scrollY > 50) {
+        header.style.boxShadow = "var(--shadow)";
+        header.style.background = "rgba(250, 248, 245, 0.95)";
+      } else {
+        header.style.boxShadow = "none";
+        header.style.background = "rgba(250, 248, 245, 0.85)";
+      }
+    }
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+
+      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+        // セクションのIDが hero の場合は、何もアクティブにしない（または最初のブックレット）
+        if (section.id !== "top") {
+          currentId = `#${section.id}`;
+        }
+      }
+    });
+
+    navLinks.forEach((link) => {
+      const href = link.getAttribute("href");
+      const isActive = href === currentId;
+      link.classList.toggle("active", isActive);
+
+      // モバイル時にアクティブなタブを自動スクロールで表示位置に持ってくる
+      if (isActive && window.innerWidth < 900) {
+        link.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+      }
+    });
+  });
+
+  // スムーズスクロールイベントの紐付け
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute("href");
+      const targetSection = document.querySelector(targetId);
+
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  });
+}

@@ -11,9 +11,38 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <header class="site-header" id="siteHeader">
+      <div class="header-container">
+        <a href="#top" class="site-logo">冠着山(姨捨山)</a>
+        <button class="menu-trigger" id="menuTrigger" aria-label="メニューを開閉する" aria-expanded="false">
+          <span class="menu-trigger-bar"></span>
+          <span class="menu-trigger-bar"></span>
+          <span class="menu-trigger-bar"></span>
+        </button>
+        <nav class="site-nav" id="siteNav" aria-label="グローバルナビゲーション">
+          <a href="#section-book" class="nav-link active">冊子「冠着山」</a>
+          <a href="#section-legend" class="nav-link">姨捨伝説</a>
+          <a href="#section-shrine" class="nav-link">孝子観音と里宮</a>
+          <a href="#section-training" class="nav-link">修験道体験</a>
+          <a href="#section-college" class="nav-link">冠着大学</a>
+          <a href="#section-people" class="nav-link">山麓の人々</a>
+        </nav>
+      </div>
+    </header>
+
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
-        <img src="assets/kanmuriki-wide.jpeg" alt="田園越しに望む冠着山">
+        <div class="hero-bg-wrapper">
+          <img src="assets/kanmuriki-wide.jpeg" alt="田園越しに望む冠着山" id="heroImage">
+          <div class="hero-moon" id="heroMoon"></div>
+          <div class="hero-sparkles" aria-hidden="true">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+          </div>
+        </div>
         <div class="hero-copy">
           <p class="eyebrow">信州さらしなの里</p>
           <h1 id="hero-title">冠着山(姨捨山)</h1>
@@ -22,63 +51,107 @@
             次の世代へつなぐための案内所です。
           </p>
         </div>
-      </section>
-
-      <section class="section" id="contents" aria-labelledby="contents-title">
-        <h2 id="contents-title" class="visually-hidden">掲載内容</h2>
-
-        <div class="content-browser">
-          <div class="topic-list" role="list" aria-label="掲載カテゴリ">
-            <button class="topic-button active" type="button" data-topic="book">冊子「冠着山」</button>
-            <button class="topic-button" type="button" data-topic="legend">姨捨伝説</button>
-            <button class="topic-button" type="button" data-topic="shrine">孝子観音と里宮</button>
-            <button class="topic-button" type="button" data-topic="college">冠着大学</button>
-            <button class="topic-button" type="button" data-topic="training">修験道体験</button>
-            <button class="topic-button" type="button" data-topic="events">イベント紹介</button>
-            <button class="topic-button" type="button" data-topic="people">山麓の人々</button>
-            <button class="topic-button" type="button" data-topic="links">リンク</button>
-          </div>
-
-          <article class="topic-panel" aria-live="polite">
-            <p class="panel-kicker" id="topicStatus" hidden>公開準備中</p>
-            <h3 id="topicTitle">冊子「冠着山」(姨捨山)</h3>
-            <div class="topic-banner" id="topicBanner" hidden></div>
-            <div id="topicBody">
-              冊子の全ページを掲載し、各記事へ直接移動できる入口を用意します。
-            </div>
-            <ul id="topicItems"></ul>
-            <a id="topicLink" class="button small" href="#contents" hidden>詳細を見る</a>
-            <div class="keyword-gallery" id="keywordGallery" hidden></div>
-            <div class="booklet-inline" id="bookletInline">
-              <div class="booklet-reader single-page" aria-live="polite">
-                <button class="booklet-side-control previous" type="button" id="prevSpread" aria-label="前のページへ">前へ</button>
-                <figure class="booklet-page" id="leftPageSlot">
-                  <img id="leftPageImage" alt="">
-                  <figcaption id="leftPageCaption"></figcaption>
-                </figure>
-                <figure class="booklet-page" id="rightPageSlot" hidden>
-                  <img id="rightPageImage" alt="">
-                  <figcaption id="rightPageCaption"></figcaption>
-                </figure>
-                <button class="booklet-side-control next" type="button" id="nextSpread" aria-label="次のページへ">次へ</button>
-              </div>
-            </div>
-          </article>
+        <div class="scroll-indicator" aria-hidden="true">
+          <span>下へスクロール</span>
+          <div class="scroll-arrow"></div>
         </div>
       </section>
+
+      <div class="content-wrapper">
+        <section class="section-content" id="section-book" aria-labelledby="title-book">
+          <div class="section-container">
+            <h2 id="title-book">冊子「冠着山」(姨捨山)</h2>
+            <p class="section-lead">冊子の全ページを掲載し、各記事へ直接移動できる入口を用意します。</p>
+            
+            <div class="booklet-inline" id="bookletInline">
+              <div class="booklet-reader-wrapper">
+                <div class="booklet-reader" aria-live="polite">
+                  <button class="booklet-side-control previous" type="button" id="prevSpread" aria-label="前のページへ">前へ</button>
+                  <div class="booklet-spread">
+                    <figure class="booklet-page" id="leftPageSlot">
+                      <img id="leftPageImage" alt="">
+                      <figcaption id="leftPageCaption"></figcaption>
+                    </figure>
+                    <figure class="booklet-page" id="rightPageSlot" hidden>
+                      <img id="rightPageImage" alt="">
+                      <figcaption id="rightPageCaption"></figcaption>
+                    </figure>
+                  </div>
+                  <button class="booklet-side-control next" type="button" id="nextSpread" aria-label="次のページへ">次へ</button>
+                </div>
+              </div>
+              <div class="thumbnail-strip" id="bookletThumbnails" aria-label="ページ選択サムネイル"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-content section-alt" id="section-legend" aria-labelledby="title-legend">
+          <div class="section-container">
+            <h2 id="title-legend">姨捨伝説</h2>
+            <p class="section-lead">信州さらしなの里に伝わる、親孝行と知恵の物語。（語り：更科かたりべの会）</p>
+            <div class="legend-container">
+              <div class="legend-text" id="legendBody"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-content" id="section-shrine" aria-labelledby="title-shrine">
+          <div class="section-container">
+            <h2 id="title-shrine">姨捨孝子観音と冠着神社の里宮</h2>
+            <p class="section-lead">姨捨伝説と親孝行者の里を伝える中心的な場所、および山頂の神々を山麓で拝する里宮の記録。</p>
+            <div class="keyword-gallery" id="shrineGallery"></div>
+          </div>
+        </section>
+
+        <section class="section-content section-alt" id="section-training" aria-labelledby="title-training">
+          <div class="section-container">
+            <h2 id="title-training">冠着山修験道体験</h2>
+            <p class="section-lead">神々のおりる霊峰冠着山での信仰と、市民団体によって蘇った修験道体験の活動記録。</p>
+            <div class="training-container">
+              <div class="training-body" id="trainingBody"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-content" id="section-college" aria-labelledby="title-college">
+          <div class="section-container">
+            <h2 id="title-college">冠着大学</h2>
+            <p class="section-lead">冠着山の植物や地質、昆虫などを学ぶ学習イベント「冠着大学」の案内チラシアーカイブ。</p>
+            <div class="keyword-gallery" id="collegeGallery"></div>
+          </div>
+        </section>
+
+        <section class="section-content section-alt" id="section-people" aria-labelledby="title-people">
+          <div class="section-container">
+            <h2 id="title-people">冠着山麓の人々</h2>
+            <p class="section-lead">歴史ある寺院や、麓の里で活動するコミュニティ、人々をご紹介します。</p>
+            <ul class="people-list" id="peopleItems"></ul>
+            <div class="links-box">
+              <h3>関連リンク</h3>
+              <ul class="links-list" id="linksItems"></ul>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
 
     <dialog class="image-lightbox" id="imageLightbox" aria-label="画像の拡大表示">
       <button class="lightbox-close" type="button" aria-label="閉じる">×</button>
-      <figure>
-        <img id="lightboxImage" alt="">
-        <figcaption id="lightboxCaption"></figcaption>
-      </figure>
+      <div class="lightbox-content">
+        <button class="lightbox-nav prev" type="button" id="prevLightbox" aria-label="前の画像へ">‹</button>
+        <figure>
+          <img id="lightboxImage" alt="">
+          <figcaption id="lightboxCaption"></figcaption>
+        </figure>
+        <button class="lightbox-nav next" type="button" id="nextLightbox" aria-label="次の画像へ">›</button>
+      </div>
     </dialog>
 
     <footer>
-      <p>冠着山(姨捨山)の自然と文化遺産を保存する会</p>
-      <a href="#top">ページ上部へ</a>
+      <div class="footer-container">
+        <p>冠着山(姨捨山)の自然と文化遺産を保存する会</p>
+        <a href="#top" class="back-to-top">ページ上部へ</a>
+      </div>
     </footer>
 
     <script src="assets/booklet-pages/pages.js"></script>

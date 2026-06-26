@@ -109,17 +109,5 @@ window.BOOKLET_PAGES = [
     },
     {
         "src":  "assets/booklet-pages/page-037.png"
-    },
-    {
-        "src":  "assets/booklet-pages/page-038.png"
-    },
-    {
-        "src":  "assets/booklet-pages/page-039.png"
-    },
-    {
-        "src":  "assets/booklet-pages/page-040.png"
-    },
-    {
-        "src":  "assets/booklet-pages/page-041.png"
     }
 ];
