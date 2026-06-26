@@ -204,6 +204,24 @@ const topics = {
         description:
           "日本遺産「月の都」となった長野県千曲市・さらしなの里の文化や活動を紹介するサイトです。",
       },
+      {
+        title: "地学団体研究会長野支部",
+        url: "http://www016.upp.so-net.ne.jp/agc-nagano/",
+        description:
+          "長野県内の地学研究・学習に関わる団体サイトです。現在はリンク切れの可能性があります。",
+      },
+      {
+        title: "明徳寺",
+        url: "http://meitokuji.org/",
+        description:
+          "冠着山・姨捨山ゆかりの地域に関わる寺院サイトです。",
+      },
+      {
+        title: "プレイファームずくなし",
+        url: "https://playfarm-zukunashi.com/",
+        description:
+          "長野県千曲市、冠着山の麓「さらしなの里」にある自然栽培・自然養蜂を中心とした体験型コミュニティ農園です。",
+      },
     ],
     link: "#contents",
     label: "",
