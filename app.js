@@ -227,10 +227,12 @@ const itemsEl = document.querySelector("#topicItems");
 const linkEl = document.querySelector("#topicLink");
 const bookletInline = document.querySelector("#bookletInline");
 const keywordGallery = document.querySelector("#keywordGallery");
+const topicPanel = document.querySelector(".topic-panel");
 const imageLightbox = document.querySelector("#imageLightbox");
 const lightboxImage = document.querySelector("#lightboxImage");
 const lightboxCaption = document.querySelector("#lightboxCaption");
 const lightboxClose = document.querySelector(".lightbox-close");
+let currentTopicKey = "book";
 
 const galleries = {
   college: [
@@ -458,9 +460,31 @@ imageLightbox?.addEventListener("click", (event) => {
   if (event.target === imageLightbox) closeImageLightbox();
 });
 
-function renderTopic(key) {
+function stabilizePanelHeightForSwitch(key) {
+  if (!topicPanel || key === currentTopicKey) return false;
+
+  const rect = topicPanel.getBoundingClientRect();
+  const oldHeight = topicPanel.offsetHeight;
+  const isDeepInsidePanel = rect.top < 0 && oldHeight > window.innerHeight;
+  if (!isDeepInsidePanel) return false;
+
+  topicPanel.style.minHeight = `${oldHeight}px`;
+  return true;
+}
+
+function releasePanelHeightAfterScroll() {
+  if (!topicPanel) return;
+
+  window.setTimeout(() => {
+    topicPanel.style.minHeight = "";
+  }, 900);
+}
+
+function renderTopic(key, options = {}) {
   const topic = topics[key];
   if (!topic) return;
+
+  const shouldStabilize = options.stabilizeScroll ? stabilizePanelHeightForSwitch(key) : false;
 
   statusEl.textContent = "";
   statusEl.hidden = true;
@@ -509,10 +533,19 @@ function renderTopic(key) {
   buttons.forEach((button) => {
     button.classList.toggle("active", button.dataset.topic === key);
   });
+
+  currentTopicKey = key;
+
+  if (shouldStabilize) {
+    requestAnimationFrame(() => {
+      topicPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      releasePanelHeightAfterScroll();
+    });
+  }
 }
 
 buttons.forEach((button) => {
-  button.addEventListener("click", () => renderTopic(button.dataset.topic));
+  button.addEventListener("click", () => renderTopic(button.dataset.topic, { stabilizeScroll: true }));
 });
 
 renderTopic("book");
