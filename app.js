@@ -70,15 +70,11 @@ const topics = {
   college: {
     status: "記録整理中",
     title: "冠着大学",
-    body:
-      "冠着山の自然、文化、地域活動を学ぶ場として、過去の巡検や講座の記録をテーマ別に整理します。",
-    items: [
-      "地質、植物、昆虫の巡検記録",
-      "講座資料や写真の追加",
-      "専門家の解説記事への展開",
-    ],
+    body: "",
+    items: [],
     link: "#contents",
     label: "",
+    gallery: "college",
   },
   training: {
     status: "活動記録",
@@ -181,12 +177,25 @@ const topics = {
   people: {
     status: "記事募集",
     title: "冠着山麓の人々",
-    body:
-      "会員の記事を中心に、山麓で活動する人たちの面白い取り組みを写真付きで紹介します。",
-    items: [
-      "姨捨棚田バンド、明徳寺、農園など",
-      "紙芝居、コーラス、地域活動の紹介",
-      "写真付きプロフィール記事に展開",
+    body: "",
+    items: [],
+    relatedLinks: [
+      {
+        title: "明徳寺",
+        description:
+          "冠着山信仰や修験道の歴史に関わる寺院です。冊子本文では、明徳寺の不動明王と冠着社の大己貴命が神仏習合神として勧請され、冠着山頂上に石尊大権現が祀られたこと、また明徳寺が修験者の拠り所であったことが紹介されています。",
+      },
+      {
+        title: "プレイファームずくなし",
+        description:
+          "冠着山の麓「さらしなの里」にある体験型コミュニティ農園です。自然栽培の野菜づくりや自然養蜂を中心に、味噌づくり、稲作、講座、ワークショップなどを行い、遊びながら学び、食を体験できる場として活動しています。",
+      },
+      {
+        title: "ギター工房「上水」",
+        url: "assets/people/homepage-articles-continued.pdf",
+        description:
+          "冠着山の麓にあるギター工房を紹介する記事です。姨捨の棚田の傍らで育った上水清さんが、手作りギターの制作に取り組む歩みや、工房を訪れる人々との交流、ギター製作への思いを掲載しています。",
+      },
     ],
     link: "#contents",
     label: "",
@@ -200,27 +209,8 @@ const topics = {
     relatedLinks: [
       {
         title: "さらしなルネサンス",
-        url: "https://sarashina-r.com/",
         description:
           "日本遺産「月の都」となった長野県千曲市・さらしなの里の文化や活動を紹介するサイトです。",
-      },
-      {
-        title: "地学団体研究会長野支部",
-        url: "http://www016.upp.so-net.ne.jp/agc-nagano/",
-        description:
-          "長野県内の地学研究・学習に関わる団体サイトです。現在はリンク切れの可能性があります。",
-      },
-      {
-        title: "明徳寺",
-        url: "http://meitokuji.org/",
-        description:
-          "冠着山・姨捨山ゆかりの地域に関わる寺院サイトです。",
-      },
-      {
-        title: "プレイファームずくなし",
-        url: "https://playfarm-zukunashi.com/",
-        description:
-          "長野県千曲市、冠着山の麓「さらしなの里」にある自然栽培・自然養蜂を中心とした体験型コミュニティ農園です。",
       },
     ],
     link: "#contents",
@@ -243,6 +233,48 @@ const lightboxCaption = document.querySelector("#lightboxCaption");
 const lightboxClose = document.querySelector(".lightbox-close");
 
 const galleries = {
+  college: [
+    {
+      keyword: "冠着山の植物観察会",
+      note: "第二回冠着大学の案内チラシ。",
+      layout: "document",
+      photos: [
+        { src: "assets/college/college-plants.jpg", alt: "第二回冠着大学 冠着山の植物観察会チラシ" },
+      ],
+    },
+    {
+      keyword: "姫ほたる講演",
+      note: "姫ほたるをテーマにした講演案内。",
+      layout: "document",
+      photos: [
+        { src: "assets/college/college-himebotaru.jpg", alt: "姫ほたる講演チラシ" },
+      ],
+    },
+    {
+      keyword: "冠着大学 2019",
+      note: "塚原先生による冠着大学の案内チラシ。",
+      layout: "document",
+      photos: [
+        { src: "assets/college/college-geology-2019.jpg", alt: "冠着大学2019 チラシ" },
+      ],
+    },
+    {
+      keyword: "修験道体験 令和元年",
+      note: "冠着山修験道体験の案内チラシ。",
+      layout: "document",
+      photos: [
+        { src: "assets/college/shugendo-flyer-2019.jpg", alt: "修験道体験 令和元年チラシ" },
+      ],
+    },
+    {
+      keyword: "第4回冠着大学 昆虫",
+      note: "大代先生による昆虫講座の案内チラシ。",
+      layout: "document",
+      photos: [
+        { src: "assets/college/college-insects-2018.jpg", alt: "第4回冠着大学 昆虫講座チラシ" },
+      ],
+    },
+  ],
   shrine: [
     {
       keyword: "姨捨孝子観音",
@@ -360,10 +392,12 @@ function renderKeywordGallery(name) {
   if (!keywordGallery) return;
 
   keywordGallery.hidden = !sections.length;
+  keywordGallery.classList.toggle("college-gallery", name === "college");
   keywordGallery.replaceChildren(
     ...sections.map((section) => {
       const article = document.createElement("article");
       article.className = "keyword-block";
+      article.classList.toggle("document-block", section.layout === "document");
 
       const header = document.createElement("div");
       header.className = "keyword-block-header";
@@ -444,10 +478,14 @@ function renderTopic(key) {
       const li = document.createElement("li");
       li.className = "related-link-item";
 
-      const anchor = document.createElement("a");
-      anchor.href = item.url;
-      anchor.target = "_blank";
-      anchor.rel = "noopener noreferrer";
+      const container = item.url ? document.createElement("a") : document.createElement("div");
+      if (item.url) {
+        container.href = item.url;
+        container.target = "_blank";
+        container.rel = "noopener noreferrer";
+      } else {
+        container.className = "related-link-static";
+      }
 
       const title = document.createElement("strong");
       title.textContent = item.title;
@@ -455,8 +493,8 @@ function renderTopic(key) {
       const description = document.createElement("span");
       description.textContent = item.description;
 
-      anchor.append(title, description);
-      li.append(anchor);
+      container.append(title, description);
+      li.append(container);
       return li;
     }),
   );

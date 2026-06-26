@@ -361,7 +361,8 @@ figcaption {
   list-style: none;
 }
 
-.related-link-item a {
+.related-link-item a,
+.related-link-item div {
   display: grid;
   gap: 6px;
   padding: 16px 18px;
@@ -373,6 +374,10 @@ figcaption {
 
 .related-link-item a:hover {
   border-color: var(--forest);
+}
+
+.related-link-static {
+  opacity: 0.82;
 }
 
 .related-link-item strong {
@@ -539,6 +544,54 @@ figcaption {
   min-height: 180px;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+}
+
+.document-block .gallery-image-button {
+  background: white;
+}
+
+.document-block .keyword-photos img {
+  height: auto;
+  min-height: 0;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.college-gallery {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.college-gallery .keyword-block {
+  gap: 10px;
+  padding: 12px;
+  grid-template-rows: minmax(76px, auto) 1fr;
+}
+
+.college-gallery .keyword-block-header {
+  gap: 3px;
+}
+
+.college-gallery .keyword-block h4 {
+  font-size: 16px;
+}
+
+.college-gallery .keyword-block p {
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.college-gallery .keyword-photos img {
+  width: 100%;
+  height: 240px;
+  object-fit: contain;
+}
+
+.college-gallery .keyword-photos,
+.college-gallery .keyword-photos figure,
+.college-gallery .gallery-image-button {
+  height: 240px;
 }
 
 .image-lightbox {
