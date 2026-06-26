@@ -770,22 +770,22 @@ h2.reveal-title.visible::after {
   transform: scale(1.08);
 }
 
-/* 冠着大学用ギャラリー */
-.college-gallery {
+/* チラシ・文書用ギャラリー */
+.flyer-gallery {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
-.college-gallery .keyword-block {
+.flyer-gallery .keyword-block {
   padding: 16px;
 }
 
-.college-gallery .keyword-photos,
-.college-gallery .keyword-photos figure,
-.college-gallery .gallery-image-button {
+.flyer-gallery .keyword-photos,
+.flyer-gallery .keyword-photos figure,
+.flyer-gallery .gallery-image-button {
   height: 260px;
 }
 
-.college-gallery .keyword-photos img {
+.flyer-gallery .keyword-photos img {
   object-fit: contain;
   background: white;
   height: 100%;
