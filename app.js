@@ -159,7 +159,7 @@ const galleries = {
   shrine: [
     {
       keyword: "姨捨孝子観音",
-      note: "姨捨伝説と親孝行者の里を伝える中心的な場所。",
+      note: "姨捨伝説と親孝行者の里を伝える中心的な場所。参拝すれば、老人の知恵が授かり、健康で円満な家庭をきずくことができると伝えられている。パワースポット",
       photos: [
         { src: "assets/shrine/koshi-kannon-statue.jpeg", alt: "姨捨孝子観音の全景" },
         { src: "assets/shrine/koshi-kannon-monument.jpeg", alt: "姨捨孝子観音と由来碑" },
@@ -168,7 +168,7 @@ const galleries = {
     },
     {
       keyword: "冠着神社里宮（観月殿）",
-      note: "冠着山頂の神々を山麓で拝する里宮の記憶。",
+      note: "この里宮の中にも頂上冠着神社の様々な神が祀られている。その手前に立ち並ぶ歌碑。",
       photos: [
         { src: "assets/shrine/kangetsuden.jpeg", alt: "冠着神社里宮の観月殿" },
       ],
@@ -182,7 +182,7 @@ const galleries = {
     },
     {
       keyword: "六社の祠",
-      note: "冠着社、瀧社、諏訪社、秋葉社、三島社、須坂社を伝える祠。",
+      note: "冠着社、瀧社、諏訪社、秋葉社、三島社、須坂社の祠。",
       photos: [
         { src: "assets/shrine/six-shrines.jpeg", alt: "六社の祠" },
       ],
@@ -196,7 +196,7 @@ const galleries = {
     },
     {
       keyword: "展望館",
-      note: "冠着山を望む展望館。",
+      note: "冠着山を望む展望館。そば処。さらしなそば(純白のそば)が食べられる(要予約)。",
       photos: [
         { src: "assets/shrine/tenboukan-view.jpeg", alt: "冠着山と展望館" },
         { src: "assets/shrine/tenboukan-sign.jpeg", alt: "展望館への案内看板" },
@@ -265,7 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ヒーローのスクロールパララックス効果
-  const heroMoon = document.querySelector("#heroMoon");
   const heroCopy = document.querySelector(".hero-copy");
 
   window.addEventListener("scroll", () => {
@@ -273,9 +272,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (scrolled < window.innerHeight) {
       if (heroImage) {
         heroImage.style.transform = `scale(1.05) translateY(${scrolled * 0.12}px)`;
-      }
-      if (heroMoon) {
-        heroMoon.style.transform = `translateY(${scrolled * -0.22}px)`;
       }
       if (heroCopy) {
         heroCopy.style.transform = `translateY(${scrolled * 0.18}px)`;
@@ -286,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 各セクションのスクロール演出
   const revealSections = document.querySelectorAll(".section-content");
-  
+
   // JSが有効な場合にのみ初期非表示化クラスを適用
   revealSections.forEach((section, index) => {
     // セクションごとに左右交互のスライド方向を設定
@@ -606,8 +602,7 @@ function initBooklet() {
     if (event.key === "ArrowLeft") movePage(-1);
     if (event.key === "ArrowRight") movePage(1);
   });
-
-  renderBooklet();
+  renderBooklet(true);
 }
 
 function shouldShowSpread() {
@@ -619,7 +614,7 @@ function clampPageIndex(index) {
   return Math.min(Math.max(index, 0), Math.max(bookletPages.length - 1, 0));
 }
 
-function renderBooklet() {
+function renderBooklet(isInitial = false) {
   const bookletReader = document.querySelector(".booklet-reader");
   const leftPageSlot = document.querySelector("#leftPageSlot");
   const rightPageSlot = document.querySelector("#rightPageSlot");
@@ -664,7 +659,7 @@ function renderBooklet() {
   // ボタンの有効／無効制御
   if (prevButton) prevButton.disabled = currentPageIndex === 0;
   if (nextButton) {
-    nextButton.disabled = isSpread && rightIndex >= 0 
+    nextButton.disabled = isSpread && rightIndex >= 0
       ? rightIndex >= bookletPages.length - 1
       : currentPageIndex >= bookletPages.length - 1;
   }
@@ -675,7 +670,7 @@ function renderBooklet() {
     const isActive = idx === leftIndex || (rightIndex >= 0 && idx === rightIndex);
     thumb.classList.toggle("active", isActive);
 
-    if (isActive && thumb.scrollIntoView) {
+    if (isActive && !isInitial && thumb.scrollIntoView) {
       // スムーズにスクロールさせて可視範囲に入れる
       thumb.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
     }
@@ -696,7 +691,7 @@ function setPageSlot(slot, image, caption, page, index) {
   }
 
   slot.hidden = false;
-  
+
   // アニメーション用のクラス適用
   image.style.opacity = 0;
   setTimeout(() => {
@@ -896,7 +891,7 @@ function initScrollspy() {
     });
   });
 
-  // スムーズスクロールイベントの紐付け
+  // スムーズスクロールイベントの紐付け（横方向のズレを防ぐため、縦方向のみスクロール）
   navLinks.forEach((link) => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
@@ -904,7 +899,14 @@ function initScrollspy() {
       const targetSection = document.querySelector(targetId);
 
       if (targetSection) {
-        targetSection.scrollIntoView({ behavior: "smooth" });
+        const htmlStyles = window.getComputedStyle(document.documentElement);
+        const scrollPaddingTop = parseInt(htmlStyles.scrollPaddingTop) || 0;
+        const targetY = (window.scrollY || window.pageYOffset) + targetSection.getBoundingClientRect().top - scrollPaddingTop;
+
+        window.scrollTo({
+          top: targetY,
+          behavior: "smooth"
+        });
       }
     });
   });
