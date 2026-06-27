@@ -1,0 +1,129 @@
+.content-wrapper {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* 共通セクションスタイル */
+.section-content {
+  padding: clamp(60px, 8vw, 120px) 24px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: center;
+  opacity: 1;
+  transform: none;
+  transition: opacity 1.0s cubic-bezier(0.25, 0.8, 0.25, 1), 
+              transform 1.0s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.section-content.reveal-init {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* 左からスライドイン */
+.section-content.reveal-from-left {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+/* 右からスライドイン */
+.section-content.reveal-from-right {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.section-content.reveal {
+  opacity: 1;
+  transform: translateX(0) translateY(0);
+}
+
+/* 子要素の時差つきフェードイン */
+.reveal-child {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.reveal-child.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 見出しの演出（スケール＋フェード） */
+.reveal-title {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.reveal-title.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* カードのスライドアップ */
+.reveal-card {
+  opacity: 0;
+  transform: translateY(40px) scale(0.97);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.reveal-card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* 写真のズームイン出現 */
+.reveal-photo {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
+              transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.reveal-photo.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* 横線の伸びるアニメーション */
+h2::after {
+  transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) 0.3s;
+}
+
+.reveal-title h2::after,
+h2.reveal-title::after {
+  width: 0;
+}
+
+.reveal-title.visible h2::after,
+h2.reveal-title.visible::after {
+  width: 40px;
+}
+
+.section-alt {
+  background: var(--paper-alt);
+}
+
+.section-container {
+  max-width: 1000px;
+  width: 100%;
+}
+
+.section-lead {
+  max-width: 700px;
+  margin: 0 auto 50px;
+  text-align: center;
+  color: var(--muted);
+  font-size: clamp(15px, 1.8vw, 17px);
+  line-height: 1.8;
+}
+
+.ib {
+  display: inline-block;
+}

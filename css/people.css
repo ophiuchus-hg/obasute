@@ -1,0 +1,61 @@
+/* 山麓の人々・リンク */
+.people-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 24px;
+  padding: 0;
+  margin: 0 0 50px;
+  list-style: none;
+}
+
+.related-link-item {
+  display: flex;
+}
+
+.related-link-item a,
+.related-link-item .related-link-static {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px;
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  width: 100%;
+}
+
+.related-link-item a:hover {
+  transform: translateY(-3px);
+  border-color: var(--forest);
+  box-shadow: var(--shadow-hover);
+}
+
+.related-link-item strong {
+  font-size: 18px;
+  color: var(--forest-dark);
+  font-family: "Noto Serif JP", serif;
+}
+
+.related-link-item span {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.links-box {
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+}
+
+.links-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

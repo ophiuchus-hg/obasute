@@ -1,0 +1,209 @@
+/* ヒーローセクション */
+.hero {
+  position: relative;
+  height: 95vh;
+  min-height: 600px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 max(24px, calc((100% - 1200px) / 2 + 24px));
+  color: white;
+}
+
+.hero-bg-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: -2;
+}
+
+.hero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.05);
+}
+
+
+
+.hero-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.sparkle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #FFF7D6;
+  border-radius: 50%;
+  opacity: 0;
+  animation: sparkleAnim 8s infinite ease-in-out;
+}
+
+.sparkle:nth-child(1) { top: 20%; left: 30%; animation-delay: 0s; }
+.sparkle:nth-child(2) { top: 35%; left: 75%; animation-delay: 2s; width: 4px; height: 4px; }
+.sparkle:nth-child(3) { top: 60%; left: 15%; animation-delay: 4s; }
+.sparkle:nth-child(4) { top: 50%; left: 50%; animation-delay: 1s; width: 2px; height: 2px; }
+.sparkle:nth-child(5) { top: 75%; left: 80%; animation-delay: 5s; }
+
+@keyframes sparkleAnim {
+  0%, 100% { opacity: 0; transform: translateY(0) scale(0.8); }
+  50% { opacity: 0.7; transform: translateY(-20px) scale(1.2); }
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* 左寄せテキストの可読性を確保するグラデーションと、下部に向けたグラデーションの組み合わせ */
+  background: linear-gradient(90deg, rgba(9, 22, 16, 0.85) 0%, rgba(9, 22, 16, 0.5) 45%, rgba(9, 22, 16, 0.1) 100%),
+              linear-gradient(180deg, rgba(9, 22, 16, 0.2) 0%, rgba(9, 22, 16, 0.75) 100%);
+  z-index: -1;
+}
+
+/* Ken Burnsアニメーション用CSSクラス（JSで適用） */
+.kenburns-active {
+  animation: kenburnsEffect 20s ease-out forwards;
+}
+
+@keyframes kenburnsEffect {
+  0% {
+    transform: scale(1.05) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.15) translate(-1%, -1%);
+  }
+}
+
+.hero-copy {
+  width: 100%;
+  max-width: 700px;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.3s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-brand {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--gold-light);
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-shadow: 0 2px 8px rgba(9, 22, 16, 0.8);
+}
+
+.title-main {
+  display: block;
+  font-size: clamp(42px, 7.5vw, 82px);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: white;
+  line-height: 1.1;
+  text-shadow: 0 4px 24px rgba(9, 22, 16, 0.9);
+}
+
+.title-sub {
+  display: block;
+  font-size: clamp(22px, 3.8vw, 32px);
+  font-weight: 500;
+  color: var(--gold-light);
+  margin-top: 10px;
+  letter-spacing: 0.08em;
+  text-shadow: 0 2px 10px rgba(9, 22, 16, 0.85);
+}
+
+.hero-desc-wrapper {
+  margin-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 24px;
+}
+
+.hero-desc-lead {
+  font-size: clamp(16px, 2.2vw, 19px);
+  line-height: 1.85;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 20px 0;
+  text-shadow: 0 2px 10px rgba(9, 22, 16, 0.85);
+}
+
+.hero-meta {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.meta-org {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.4);
+  padding-bottom: 2px;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.7);
+  animation: pulse 2s infinite;
+}
+
+.scroll-arrow {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-arrow::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  animation: scrollArrowAnim 2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+@keyframes scrollArrowAnim {
+  0% { transform: translateY(-100%); }
+  80%, 100% { transform: translateY(100%); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
