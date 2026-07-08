@@ -5,6 +5,7 @@ import { openLightbox } from "./lightbox.js";
 // モジュールスコープの状態
 let bookletPages = [];
 let currentPageIndex = 0;
+let lastDirection = "next";
 
 // DOM要素キャッシュ
 let bookletReader = null;
@@ -37,47 +38,120 @@ export function initBooklet() {
 
   if (!bookletPages.length) return;
 
-  // サムネイルの描画
+  // サムネイルの描画（右開きのため、逆順にして右から左へ並べる）
   if (thumbnailContainer) {
-    thumbnailContainer.replaceChildren(
-      ...bookletPages.map((page, index) => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.setAttribute("aria-label", `ページ ${index + 1} へ移動`);
+    const thumbs = bookletPages.map((page, index) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.setAttribute("aria-label", `ページ ${index + 1} へ移動`);
 
-        const img = document.createElement("img");
-        img.src = page.src;
-        img.alt = `ページ ${index + 1} のミニ画像`;
-        img.loading = "lazy";
+      const img = document.createElement("img");
+      img.src = page.src;
+      img.alt = `ページ ${index + 1} のミニ画像`;
+      img.loading = "lazy";
 
-        const span = document.createElement("span");
-        span.textContent = `P. ${index + 1}`;
+      const span = document.createElement("span");
+      span.textContent = `P. ${index + 1}`;
 
-        btn.append(img, span);
-        btn.addEventListener("click", () => {
-          goToPage(index);
-        });
-        return btn;
-      })
-    );
+      btn.append(img, span);
+      btn.addEventListener("click", () => {
+        goToPage(index);
+      });
+
+      // 左右矢印キーでのサムネイル選択移動（右開きに追従）
+      btn.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          if (index < bookletPages.length - 1) {
+            goToPage(index + 1); // 左に進む＝次のページへ
+            focusThumbnail(index + 1);
+          }
+        }
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          if (index > 0) {
+            goToPage(index - 1); // 右に戻る＝前のページへ
+            focusThumbnail(index - 1);
+          }
+        }
+      });
+      return btn;
+    });
+    // 配列を逆順にして、P.1 が右端、P.36 が左端になるように挿入
+    thumbnailContainer.replaceChildren(...thumbs.reverse());
   }
 
   prevButton?.addEventListener("click", () => movePage(-1));
   nextButton?.addEventListener("click", () => movePage(1));
 
-  // キーボード操作のリスナー
+  // キーボード操作のリスナー（フォーカスが領域内にあるか、またはホバー時のみ動作）
   document.addEventListener("keydown", (event) => {
     const bookletArea = document.querySelector("#bookletInline");
-    if (!bookletArea || !bookletArea.matches(":hover")) return;
-    if (event.key === "ArrowLeft") movePage(-1);
-    if (event.key === "ArrowRight") movePage(1);
+    if (!bookletArea) return;
+
+    const hasFocus = bookletArea.contains(document.activeElement);
+    const isHovered = bookletArea.matches(":hover");
+    if (!isHovered && !hasFocus) return;
+
+    // フォーカスがサムネイルにある時はサムネイル個別のリスナーに任せる
+    if (document.activeElement && document.activeElement.closest("#bookletThumbnails")) {
+      return;
+    }
+
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      movePage(1); // 左矢印で進む（右開き）
+    }
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      movePage(-1); // 右矢印で戻る（右開き）
+    }
   });
+
+  // リサイズイベントのリスナーを追加
+  window.addEventListener("resize", () => {
+    renderBooklet();
+  });
+
+  // スワイプ操作のセットアップ
+  setupSwipeGestures();
+
   renderBooklet(true);
 }
 
+function setupSwipeGestures() {
+  const spreadArea = document.querySelector(".booklet-spread");
+  if (!spreadArea) return;
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  spreadArea.addEventListener("touchstart", (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  spreadArea.addEventListener("touchend", (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+
+    const diffX = touchEndX - touchStartX;
+    const diffY = touchEndY - touchStartY;
+
+    // 縦スクロールを優先するため、横方向の移動量が縦方向より大きく、かつ50px以上の場合のみスワイプと判定
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+      if (diffX > 0) {
+        movePage(-1); // 右スワイプで前へ
+      } else {
+        movePage(1); // 左スワイプで次へ
+      }
+    }
+  }, { passive: true });
+}
+
 function shouldShowSpread() {
-  // 常に1ページ表示
-  return false;
+  // 1024px以上の画面幅で見開き表示を許可
+  return window.innerWidth >= 1024;
 }
 
 function clampPageIndex(index) {
@@ -91,23 +165,28 @@ function renderBooklet(isInitial = false) {
   const isSpread = shouldShowSpread();
 
   // 見開き表示の場合のインデックス算出
-  // 表紙（0）は1枚。1ページ目以降は、奇数が左、偶数が右。
-  let leftIndex = currentPageIndex;
-  let rightIndex = -1;
+  // 表紙（0）は1枚。1ページ目以降は右開き：右が若いページ、左が次のページ
+  let leftIndex = -1;
+  let rightIndex = currentPageIndex;
 
   if (isSpread) {
-    // 現在のインデックスが偶数の場合、それは右側のページなので、左側（奇数）を1つ前に調整
     if (currentPageIndex % 2 === 0) {
-      leftIndex = currentPageIndex - 1;
-      rightIndex = currentPageIndex;
-    } else {
+      // 偶数ページ（左側）
       leftIndex = currentPageIndex;
-      rightIndex = currentPageIndex + 1 < bookletPages.length ? currentPageIndex + 1 : -1;
+      rightIndex = currentPageIndex - 1;
+    } else {
+      // 奇数ページ（右側）
+      leftIndex = currentPageIndex + 1 < bookletPages.length ? currentPageIndex + 1 : -1;
+      rightIndex = currentPageIndex;
     }
+  } else {
+    // 1ページ表示の時は左スロットに現在のページを割り当て、右スロットは非表示にする
+    leftIndex = currentPageIndex;
+    rightIndex = -1;
   }
 
   // スロットへのページ割り当て
-  const leftPage = bookletPages[leftIndex];
+  const leftPage = leftIndex >= 0 ? bookletPages[leftIndex] : null;
   const rightPage = rightIndex >= 0 ? bookletPages[rightIndex] : null;
 
   setPageSlot(leftPageSlot, leftPageImage, leftPageCaption, leftPage, leftIndex);
@@ -127,12 +206,18 @@ function renderBooklet(isInitial = false) {
   // サムネイルのアクティブ状態の更新
   const thumbnails = document.querySelectorAll("#bookletThumbnails button");
   thumbnails.forEach((thumb, idx) => {
-    const isActive = idx === leftIndex || (rightIndex >= 0 && idx === rightIndex);
+    // HTML上は逆順（P.36が左、P.1が右）に並んでいるため、DOMのインデックス（idx）を元のページインデックス（0〜）に換算します
+    const pageIndex = bookletPages.length - 1 - idx;
+    const isActive = pageIndex === leftIndex || (rightIndex >= 0 && pageIndex === rightIndex);
     thumb.classList.toggle("active", isActive);
 
-    if (isActive && !isInitial && thumb.scrollIntoView) {
-      // スムーズにスクロールさせて可視範囲に入れる
-      thumb.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    if (isActive && thumb.scrollIntoView) {
+      // スムーズにスクロールさせて可視範囲に入れる（初期ロード時は瞬間的に、以降はスムーズに）
+      thumb.scrollIntoView({ 
+        behavior: isInitial ? "auto" : "smooth", 
+        block: "nearest", 
+        inline: "center" 
+      });
     }
   });
 }
@@ -152,13 +237,21 @@ function setPageSlot(slot, image, caption, page, index) {
 
   slot.hidden = false;
 
-  // アニメーション用のクラス適用
+  // トランジションを一旦無効にしてスライド初期位置に設定
+  image.style.transition = "none";
   image.style.opacity = 0;
+  // 右開きなので、進むときは左から（-24px）、戻るときは右から（24px）スライドイン
+  image.style.transform = lastDirection === "next" ? "translateX(-24px)" : "translateX(24px)";
+
   setTimeout(() => {
     image.src = page.src;
     image.alt = page.alt || `冊子「冠着山」 ${index + 1}ページ`;
     caption.textContent = `P. ${index + 1} / ${bookletPages.length}`;
+    
+    // トランジションを有効にして元に戻す（スライドイン）
+    image.style.transition = "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease";
     image.style.opacity = 1;
+    image.style.transform = "translateX(0)";
     image.style.cursor = "zoom-in";
 
     // クリック時にライトボックスで拡大表示
@@ -172,16 +265,28 @@ function setPageSlot(slot, image, caption, page, index) {
 }
 
 function goToPage(index) {
+  if (index !== currentPageIndex) {
+    lastDirection = index > currentPageIndex ? "next" : "prev";
+  }
   currentPageIndex = clampPageIndex(index);
   renderBooklet();
 }
 
 function movePage(direction) {
   const isSpread = shouldShowSpread();
+  lastDirection = direction > 0 ? "next" : "prev";
   // 見開きのときは2ページずつ、そうでないときは1ページずつ移動
   let offset = direction;
   if (isSpread) {
     offset = direction * 2;
   }
   goToPage(currentPageIndex + offset);
+}
+
+function focusThumbnail(index) {
+  const thumbnails = document.querySelectorAll("#bookletThumbnails button");
+  const targetIdx = bookletPages.length - 1 - index; // 逆順になっているため換算
+  if (thumbnails[targetIdx]) {
+    thumbnails[targetIdx].focus();
+  }
 }

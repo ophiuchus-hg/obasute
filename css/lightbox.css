@@ -32,23 +32,23 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: calc(90vw - 120px);
-  max-height: 90vh;
+  max-width: 95vw; /* 横幅の制限を緩和して画像を最大化 */
+  max-height: 96vh;
   margin: 0 auto;
 }
 
 .image-lightbox figure {
   margin: 0;
-  padding: 16px;
-  background: white;
+  padding: clamp(8px, 1.5vw, 16px); /* 余白を調整 */
+  background: var(--paper-strong);
   border-radius: 8px;
   box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   max-width: 100%;
-  max-height: 90vh;
+  max-height: 96vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   box-sizing: border-box;
 }
 
@@ -56,7 +56,7 @@
   width: auto;
   height: auto;
   max-width: 100%;
-  max-height: 75vh;
+  max-height: 84vh; /* 高さを75vhから84vhに拡張して表示サイズを大きく */
   object-fit: contain;
   display: block;
   margin: 0 auto;
@@ -110,6 +110,7 @@
   cursor: pointer;
   transition: var(--transition);
   user-select: none;
+  opacity: 0.5; /* 通常時は少し半透明にして画像を邪魔しないように */
 }
 
 .lightbox-nav.prev {
@@ -124,4 +125,5 @@
   background: var(--forest);
   border-color: var(--forest);
   transform: translateY(-50%) scale(1.08);
+  opacity: 1; /* ホバー時ははっきりと表示 */
 }

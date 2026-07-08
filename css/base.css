@@ -17,11 +17,76 @@
   --gold-light: #ffd78f;
   --shadow: 0 20px 40px rgba(25, 35, 28, 0.06);
   --shadow-hover: 0 24px 48px rgba(25, 35, 28, 0.12);
-  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  --header-bg: rgba(250, 248, 245, 0.85);
+  --header-border: rgba(226, 221, 213, 0.5);
+  --header-bg-scrolled: rgba(250, 248, 245, 0.95);
+  --header-border-scrolled: rgba(226, 221, 213, 0.8);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: rgb(251, 250, 248); /* ほぼ白の極薄い和紙色。コントラスト比 16.5:1 で視認性最大 */
+  --muted: rgb(168, 183, 173); /* 明るい緑灰色。コントラスト比 6.0:1 で小文字でも読みやすい */
+  --paper: rgb(12, 18, 14); /* 宵闇の深い黒緑 */
+  --paper-alt: rgb(20, 29, 23);
+  --paper-strong: rgb(28, 39, 32);
+  --line: rgb(48, 65, 54);
+  --forest: rgb(111, 196, 147); /* 明るめのエメラルドグリーン。コントラスト比 5.5:1 */
+  --forest-dark: rgb(193, 247, 216); /* 強調テキスト用極薄ミント。コントラスト比 12.0:1 */
+  --forest-light: rgb(24, 38, 30);
+  --leaf: rgb(158, 194, 100);
+  --sky: rgb(29, 47, 54);
+  --gold: rgb(241, 184, 85); /* 明るい月光ゴールド。コントラスト比 8.5:1 */
+  --gold-light: rgb(74, 60, 32);
+  --shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  --shadow-hover: 0 24px 48px rgba(0, 0, 0, 0.5);
+  --header-bg: rgba(12, 18, 14, 0.85);
+  --header-border: rgba(48, 65, 54, 0.5);
+  --header-bg-scrolled: rgba(12, 18, 14, 0.95);
+  --header-border-scrolled: rgba(48, 65, 54, 0.8);
+}
+
+/* ダークテーマ時のコンポーネント背景色補正 */
+[data-theme="dark"] .booklet-reader-wrapper {
+  background: rgb(20, 29, 23);
+  border-color: rgb(48, 65, 54);
+}
+[data-theme="dark"] .booklet-page {
+  background: var(--paper-strong);
+  border-color: var(--line);
+}
+[data-theme="dark"] .booklet-page img {
+  background: var(--paper);
+}
+[data-theme="dark"] .thumbnail-strip {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: var(--line);
+}
+[data-theme="dark"] .thumbnail-strip button {
+  background: var(--paper-strong);
+}
+[data-theme="dark"] .thumbnail-strip button img {
+  background: var(--paper);
+}
+[data-theme="dark"] .topic-inline-photo {
+  background: var(--paper-strong);
+  border-color: var(--line);
+}
+[data-theme="dark"] .lightbox-content figure {
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
 }
 
 * {
   box-sizing: border-box;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
 }
 
 [hidden] {

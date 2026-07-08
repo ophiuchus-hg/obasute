@@ -9,15 +9,9 @@ export function initScrollspy() {
     let currentId = "";
     const scrollPosition = window.scrollY + 100; // ヘッダーの高さを考慮したオフセット
 
-    // ヘッダーのスクロール影エフェクト
+    // ヘッダーのスクロール時のクラス制御
     if (header) {
-      if (window.scrollY > 50) {
-        header.style.boxShadow = "var(--shadow)";
-        header.style.background = "rgba(250, 248, 245, 0.95)";
-      } else {
-        header.style.boxShadow = "none";
-        header.style.background = "rgba(250, 248, 245, 0.85)";
-      }
+      header.classList.toggle("scrolled", window.scrollY > 50);
     }
 
     sections.forEach((section) => {

@@ -133,7 +133,7 @@
     height: 40px;
   }
 
-  .booklet-side-control.previous {
+  .booklet-side-control.next {
     order: 2;
   }
 
@@ -141,7 +141,7 @@
     order: 1;
   }
 
-  .booklet-side-control.next {
+  .booklet-side-control.previous {
     order: 3;
   }
 

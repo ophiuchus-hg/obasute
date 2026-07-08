@@ -62,7 +62,7 @@ function buildPhotoList(galleryKey, activePhoto, bookletPages) {
     const pages = bookletPages || [];
     activeGalleryPhotos = pages.map((page, idx) => ({
       src: page.src,
-      alt: page.alt || `冊子「冠着山」 ${idx + 1}ページ / 全${pages.length}ページ`
+      alt: page.alt || `冊子「冠着山」 ${idx + 1}ページ`
     }));
   } else if (galleries[galleryKey]) {
     galleries[galleryKey].forEach((section) => {
@@ -121,6 +121,38 @@ function setupLightboxNav() {
   lightboxEl.addEventListener("click", (e) => {
     if (e.target === lightboxEl) closeLightbox();
   }, { signal });
+
+  // タッチスワイプ操作の追加
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  lightboxEl.addEventListener("touchstart", (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { signal, passive: true });
+
+  lightboxEl.addEventListener("touchend", (e) => {
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+
+    const diffX = touchEndX - touchStartX;
+    const diffY = touchEndY - touchStartY;
+
+    // 左右スワイプで前後の画像へ
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+      if (hasMultiple) {
+        if (diffX > 0) {
+          navigateLightbox(-1); // 右スワイプで前へ
+        } else {
+          navigateLightbox(1); // 左スワイプで次へ
+        }
+      }
+    } 
+    // 下スワイプでライトボックスを閉じる
+    else if (diffY > 80 && Math.abs(diffY) > Math.abs(diffX)) {
+      closeLightbox();
+    }
+  }, { signal, passive: true });
 
   // キーボードナビゲーション
   document.addEventListener("keydown", (e) => {

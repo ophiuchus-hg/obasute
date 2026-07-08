@@ -11,6 +11,7 @@ import { initBooklet } from "./components/booklet.js";
 import { initScrollspy } from "./components/scrollspy.js";
 import { initHero, initMobileMenu } from "./components/hero.js";
 import { initRevealAnimations } from "./components/reveal.js";
+import { initTheme } from "./components/theme.js";
 
 // 伝説のテキスト描画
 function renderLegend() {
@@ -20,6 +21,9 @@ function renderLegend() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // 0. テーマ切り替えの初期化
+  initTheme();
+
   // 1. ヒーロー画像の初期化
   initHero();
 
