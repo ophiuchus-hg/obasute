@@ -108,6 +108,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px; /* スティッキーヘッダーの高さ分 */
   scrollbar-gutter: stable; /* スクロールバーの表示・非表示による横ズレを防ぐ */
+  overflow-x: hidden; /* モバイル端末での横スクロールバグを完全に防止 */
 }
 
 body {

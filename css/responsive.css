@@ -173,4 +173,11 @@
   .lightbox-nav {
     display: none; /* スマホではスワイプかジェスチャ（あるいはボタンだと狭いため）非表示にし、画像を直接スライドできるようにするか、ボタンを画面下に配置する */
   }
+
+  /* モバイル時の横スクロール（コンテンツ寄り）バグの防止 */
+  .keyword-gallery,
+  .flyer-gallery {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
