@@ -148,4 +148,14 @@
   }
 }
 
+.desc-link {
+  color: var(--forest);
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.desc-link:hover {
+  color: var(--forest-dark);
+}
+
 

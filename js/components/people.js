@@ -75,7 +75,15 @@ export function renderPeopleAndLinks() {
 
         if (item.description) {
           const desc = document.createElement("span");
-          desc.textContent = item.description;
+          const escaped = item.description
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+          const parsed = escaped.replace(
+            /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+            '<a href="$2" target="_blank" rel="noopener noreferrer" class="desc-link">$1</a>'
+          );
+          desc.innerHTML = parsed;
           container.append(desc);
         }
 
