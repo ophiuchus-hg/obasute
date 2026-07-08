@@ -138,8 +138,8 @@ function setupSwipeGestures() {
     const diffX = touchEndX - touchStartX;
     const diffY = touchEndY - touchStartY;
 
-    // 縦スクロールを優先するため、横方向の移動量が縦方向より大きく、かつ50px以上の場合のみスワイプと判定
-    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+    // 縦スクロールを優先するため、横方向の移動量が縦方向の2.0倍以上大きく、かつ70px以上の場合のみスワイプと判定
+    if (Math.abs(diffX) > Math.abs(diffY) * 2 && Math.abs(diffX) > 70) {
       if (diffX > 0) {
         movePage(-1); // 右スワイプで前へ
       } else {
@@ -211,12 +211,16 @@ function renderBooklet(isInitial = false) {
     const isActive = pageIndex === leftIndex || (rightIndex >= 0 && pageIndex === rightIndex);
     thumb.classList.toggle("active", isActive);
 
-    if (isActive && thumb.scrollIntoView) {
-      // スムーズにスクロールさせて可視範囲に入れる（初期ロード時は瞬間的に、以降はスムーズに）
-      thumb.scrollIntoView({ 
-        behavior: isInitial ? "auto" : "smooth", 
-        block: "nearest", 
-        inline: "center" 
+    if (isActive && thumbnailContainer) {
+      // 縦スクロールを誘発する標準の scrollIntoView の使用を避け、横スクロールのみを制御する
+      const containerWidth = thumbnailContainer.clientWidth;
+      const thumbLeft = thumb.offsetLeft;
+      const thumbWidth = thumb.clientWidth;
+      const targetScrollLeft = thumbLeft - (containerWidth / 2) + (thumbWidth / 2);
+
+      thumbnailContainer.scrollTo({
+        left: targetScrollLeft,
+        behavior: isInitial ? "auto" : "smooth"
       });
     }
   });
