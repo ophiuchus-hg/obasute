@@ -22,17 +22,7 @@
   transform: translateY(40px);
 }
 
-/* 左からスライドイン */
-.section-content.reveal-from-left {
-  opacity: 0;
-  transform: translateX(-30px);
-}
 
-/* 右からスライドイン */
-.section-content.reveal-from-right {
-  opacity: 0;
-  transform: translateX(30px);
-}
 
 .section-content.reveal {
   opacity: 1;

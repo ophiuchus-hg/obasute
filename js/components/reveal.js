@@ -4,13 +4,8 @@ export function initRevealAnimations() {
   const revealSections = document.querySelectorAll(".section-content");
 
   // JSが有効な場合にのみ初期非表示化クラスを適用
-  revealSections.forEach((section, index) => {
-    // セクションごとに左右交互のスライド方向を設定
-    if (index % 2 === 0) {
-      section.classList.add("reveal-from-left");
-    } else {
-      section.classList.add("reveal-from-right");
-    }
+  revealSections.forEach((section) => {
+    section.classList.add("reveal-init");
 
     // 見出し（h2）に演出クラスを適用
     const heading = section.querySelector("h2");
