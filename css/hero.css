@@ -124,7 +124,7 @@
 
 .eyebrow {
   margin: 0;
-  color: var(--gold-light);
+  color: #ffd78f; /* テーマを問わず常に明るく視認性の良いゴールドに固定 */
   font-size: clamp(14px, 2vw, 18px);
   font-weight: 800;
   letter-spacing: 0.2em;
@@ -145,7 +145,7 @@
   display: block;
   font-size: clamp(22px, 3.8vw, 32px);
   font-weight: 500;
-  color: var(--gold-light);
+  color: #ffd78f; /* テーマを問わず常に明るく視認性の良いゴールドに固定 */
   margin-top: 10px;
   letter-spacing: 0.08em;
   text-shadow: 0 2px 10px rgba(9, 22, 16, 0.85);
