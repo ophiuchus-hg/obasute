@@ -105,10 +105,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 80px; /* スティッキーヘッダーの高さ分 */
   scrollbar-gutter: stable; /* スクロールバーの表示・非表示による横ズレを防ぐ */
-  overflow-x: hidden; /* モバイル端末での横スクロールバグを完全に防止 */
 }
 
 body {
@@ -118,7 +116,6 @@ body {
   font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic UI", system-ui, sans-serif;
   line-height: 1.85;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden; /* アニメーション時のはみ出しによる横スクロール・左右のズレを防ぐ */
 }
 
 img {
@@ -155,6 +152,19 @@ h2 {
   text-align: center;
   position: relative;
   padding-bottom: 18px;
+}
+
+.title-main-text {
+  display: block;
+}
+
+.title-sub-text {
+  display: block;
+  font-size: clamp(14px, 1.8vw, 16px);
+  font-weight: 500;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 0.05em;
 }
 
 h2::after {

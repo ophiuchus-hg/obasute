@@ -149,13 +149,41 @@
 }
 
 .desc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(46, 125, 50, 0.08); /* 森林テーマの極薄グリーン背景 */
   color: var(--forest);
-  text-decoration: underline;
+  padding: 3px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9em;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(46, 125, 50, 0.15);
+  margin: 6px 2px 6px 0;
   word-break: break-all;
+  vertical-align: middle;
+}
+
+.desc-link::before {
+  content: "▶";
+  font-size: 0.75em;
+  color: var(--gold); /* 再生マークはゴールド */
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .desc-link:hover {
-  color: var(--forest-dark);
+  background: var(--forest);
+  color: white !important;
+  border-color: var(--forest);
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.25);
+  transform: translateY(-1px);
+}
+
+.desc-link:hover::before {
+  color: white;
+  transform: scale(1.1);
 }
 
 

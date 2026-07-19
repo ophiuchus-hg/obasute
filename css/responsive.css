@@ -159,6 +159,28 @@
     gap: 16px;
     text-align: center;
   }
+
+  .kataribe-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .kataribe-photo {
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+
+  .kataribe-sub {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .kataribe-photo-sub {
+    width: calc(50% - 8px);
+    height: auto;
+    aspect-ratio: 16/9;
+  }
 }
 
 @media (max-width: 560px) {
@@ -179,5 +201,13 @@
   .flyer-gallery {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+
+  .kataribe-sub {
+    flex-direction: column;
+  }
+
+  .kataribe-photo-sub {
+    width: 100%;
   }
 }

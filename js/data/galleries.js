@@ -37,10 +37,11 @@ export const galleries = {
   ],
   training: [
     {
-      keyword: "修験道体験 令和元年",
+      keyword: "修験道体験　平成30年と令和元年",
       note: "冠着山修験道体験の案内チラシ。",
       layout: "document",
       photos: [
+        { src: "assets/college/shugendo-flyer-2018.png", alt: "修験道体験 平成30年チラシ" },
         { src: "assets/college/shugendo-flyer-2019.jpg", alt: "修験道体験 令和元年チラシ" },
       ],
     },
@@ -48,7 +49,7 @@ export const galleries = {
   shrine: [
     {
       keyword: "姨捨孝子観音",
-      note: "姨捨伝説と親孝行者の里を伝える中心的な場所。参拝すれば、老人の知恵が授かり、健康で円満な家庭をきずくことができると伝えられている。パワースポット",
+      note: "昭和36年（1961）建立され、併設された石碑「姨捨孝子観音由来之碑」には、その由来と姨捨伝説が記述されている。参拝すれば、老人の知恵が授かり、健康で円満な家庭をきずくことができると伝えられている。パワースポット",
       photos: [
         { src: "assets/shrine/koshi-kannon-statue.jpeg", alt: "姨捨孝子観音の全景" },
         { src: "assets/shrine/koshi-kannon-monument.jpeg", alt: "姨捨孝子観音と由来碑" },
@@ -57,16 +58,17 @@ export const galleries = {
     },
     {
       keyword: "冠着神社里宮（観月殿）",
-      note: "この里宮の中にも頂上冠着神社の様々な神が祀られている。その手前に立ち並ぶ歌碑。",
+      note: "この里宮の中にも頂上冠着神社の様々な神が祀られている。その手前には、歌碑や句碑が立ち並ぶ。",
       photos: [
         { src: "assets/shrine/kangetsuden.jpeg", alt: "冠着神社里宮の観月殿" },
+        { src: "assets/shrine/monument.jpg", alt: "里宮の手前に立ち並ぶ歌碑・句碑" },
       ],
     },
     {
-      keyword: "遥拝殿",
-      note: "冠着山を遥かに拝するための建物。",
+      keyword: "姨捨山遙拝殿",
+      note: "冠着山(冠着神社)を遥かに拝するための建物。日本遺産のストーリーとして記載されている。",
       photos: [
-        { src: "assets/shrine/haiden.jpeg", alt: "冠着神社里宮の遥拝殿" },
+        { src: "assets/shrine/haiden.jpeg", alt: "冠着神社里宮の姨捨山遙拝殿" },
       ],
     },
     {
@@ -77,8 +79,8 @@ export const galleries = {
       ],
     },
     {
-      keyword: "句碑",
-      note: "明治三十年前後に建立された、郷嶺山（冠着山）にある句碑と歌碑の記録。",
+      keyword: "句碑と歌碑",
+      note: "明治三十年前後に建立された、郷嶺山にある句碑と歌碑の記録。この頃から頂上で、中秋の名月に地元の人々が観月会を開き、句や歌を詠んだ。観月殿も建てられ、以後ここも観月のメッカとなった。現在もその伝統が引き継がれ、中秋の名月には展望館で月見会が開かれている。",
       photos: [
         { src: "assets/shrine/haiku-monument.jpg", alt: "郷嶺山の句碑と歌碑" },
       ],

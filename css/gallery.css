@@ -1,24 +1,62 @@
 /* 伝説セクション */
 .kataribe-photo-container {
-  display: flex;
-  justify-content: center;
+  display: block;
   margin: 0 auto 40px;
   max-width: 800px;
+  width: 100%;
+}
+
+.kataribe-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+.kataribe-main {
+  display: flex;
+  align-items: stretch;
 }
 
 .kataribe-photo {
-  max-width: 480px;
   width: 100%;
-  height: auto;
+  max-width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 8px;
   border: 4px solid var(--paper-strong);
   box-shadow: 0 8px 24px rgba(25, 35, 28, 0.08);
   transition: var(--transition);
+  cursor: pointer;
 }
 
 .kataribe-photo:hover {
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.01);
   box-shadow: 0 12px 32px rgba(25, 35, 28, 0.15);
+}
+
+.kataribe-sub {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.kataribe-photo-sub {
+  width: 100%;
+  height: calc(50% - 8px);
+  min-height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 4px solid var(--paper-strong);
+  box-shadow: 0 6px 18px rgba(25, 35, 28, 0.08);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.kataribe-photo-sub:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 10px 24px rgba(25, 35, 28, 0.14);
 }
 
 .legend-container {
@@ -37,6 +75,42 @@
   color: var(--ink);
   white-space: pre-wrap;
 }
+
+.legend-text p {
+  margin: 0 0 0.5em 0;
+}
+
+/* 伝説セクション内の挿入イラスト */
+.legend-image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 35px auto;
+  max-width: 400px;
+  width: 100%;
+}
+
+.legend-image {
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  border: 4px solid var(--paper-strong);
+  box-shadow: 0 6px 18px rgba(25, 35, 28, 0.08);
+  transition: var(--transition);
+}
+
+.legend-image:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 25px rgba(25, 35, 28, 0.14);
+}
+
+.legend-image-caption {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 10px;
+  text-align: center;
+}
+
 
 /* ギャラリー（里宮・大学） */
 .keyword-gallery {
@@ -162,4 +236,32 @@
   object-fit: contain;
   background: white;
   height: 100%;
+}
+
+/* 里宮ギャラリーのマルチカラム（新聞段組み）化 */
+#shrineGallery {
+  display: block;
+  column-count: 3;
+  column-gap: 24px;
+  width: 100%;
+}
+
+#shrineGallery .keyword-block {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 24px;
+  break-inside: avoid;
+  box-sizing: border-box;
+}
+
+@media (max-width: 992px) {
+  #shrineGallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  #shrineGallery {
+    column-count: 1;
+  }
 }

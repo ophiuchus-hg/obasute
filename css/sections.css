@@ -1,5 +1,5 @@
 .content-wrapper {
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
   position: relative;
 }
@@ -117,3 +117,184 @@ h2.reveal-title.visible::after {
 .ib {
   display: inline-block;
 }
+
+/* 謡曲「姨捨」セクション */
+.noh-media-container {
+  max-width: 700px;
+  margin: 0 auto 40px;
+}
+
+.noh-photos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+  align-items: center;
+}
+
+.noh-video-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
+
+.noh-photo-wrapper {
+  position: relative;
+  width: 100%;
+  height: 240px; /* 高さを揃えて固定 */
+  overflow: hidden;
+  background: rgb(18, 27, 22); /* 能舞台に馴染む深い闇色 */
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+.noh-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* トリミングせず全体を収める */
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.noh-video-link:hover .noh-photo-wrapper {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+}
+
+.noh-video-link:hover .noh-photo {
+  transform: scale(1.05);
+}
+
+/* 動画再生オーバーレイ（YouTubeリンク用） */
+.noh-play-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 18, 14, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.noh-video-link:hover .noh-play-overlay {
+  background: rgba(12, 18, 14, 0.4);
+  opacity: 1;
+}
+
+.noh-play-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease;
+}
+
+.noh-play-btn svg {
+  width: 28px;
+  height: 28px;
+  margin-left: 3px; /* 再生マークの中心ズレ補正 */
+}
+
+.noh-video-link:hover .noh-play-btn {
+  transform: scale(1.1);
+  background: var(--gold);
+}
+
+.noh-video-caption {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--forest-dark);
+  text-decoration: underline;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.noh-video-link:hover .noh-video-caption {
+  color: var(--gold);
+}
+
+/* あらすじの装飾 */
+.noh-synopsis {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.noh-synopsis h3 {
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--gold);
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.noh-synopsis p {
+  margin: 0;
+  line-height: 2.0;
+  font-size: 15px;
+}
+
+/* レスポンシブ */
+@media (max-width: 600px) {
+  .noh-photos-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* あらすじギャラリー */
+.noh-synopsis-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 30px;
+  align-items: center;
+}
+
+.noh-synopsis-photo {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  background: rgb(18, 27, 22); /* 能舞台・夜景に馴染む深い闇色 */
+  height: 240px; /* 舞台写真と同じ高さに揃える */
+  transition: var(--transition);
+}
+
+.noh-synopsis-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* トリミングせず全体を表示 */
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.noh-synopsis-photo:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-4px);
+}
+
+.noh-synopsis-photo:hover img {
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .noh-synopsis-gallery {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+

@@ -57,6 +57,24 @@ function buildPhotoList(galleryKey, activePhoto, bookletPages) {
 
   if (galleryKey === "training") {
     activeGalleryPhotos = trainingData.inlinePhotos;
+  } else if (galleryKey === "legend") {
+    activeGalleryPhotos = [
+      { src: "assets/legend_ofure.jpg", alt: "お触れの立て札を見る村人たち" },
+      { src: "assets/legend_mountain.jpg", alt: "母親を背負って山を登る多平" }
+    ];
+  } else if (galleryKey === "kataribe") {
+    activeGalleryPhotos = [
+      { src: "kataribe.jpg", alt: "更級かたりべの会の皆様" },
+      { src: "kataribe1.jpg", alt: "語り部と演奏の様子" },
+      { src: "kataribe2.jpg", alt: "語り部の姨捨伝説イラスト" }
+    ];
+  } else if (galleryKey === "noh") {
+    activeGalleryPhotos = [
+      { src: "assets/noh_sitting.jpg", alt: "能「姨捨」舞台写真（着座）" },
+      { src: "assets/noh_dancing.png", alt: "能「姨捨」舞台写真（舞）" },
+      { src: "assets/noh_poster.jpg", alt: "謡曲「姨捨」イメージ（秋乃月とシテ）" },
+      { src: "assets/noh_moon.jpg", alt: "更級の満月と歴史的建造物（煙突と赤レンガ）" }
+    ];
   } else if (galleryKey === "booklet") {
     // 冊子の全ページを対象にする
     const pages = bookletPages || [];

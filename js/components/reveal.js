@@ -1,12 +1,30 @@
 // セクション・子要素のスクロール演出ロジック（IntersectionObserver ベース）
 
+/**
+ * 要素がビューポート内にあるかどうかを判定する
+ */
+function isInViewport(el) {
+  const rect = el.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom > 0;
+}
+
+/**
+ * セクションとその子要素をアニメーションなしで即座に表示状態にする
+ */
+function revealImmediately(section) {
+  section.classList.add("reveal");
+  section.classList.remove("reveal-from-left", "reveal-from-right", "reveal-init");
+
+  section.querySelectorAll(".reveal-child, .reveal-title, .reveal-card, .reveal-photo").forEach((child) => {
+    child.classList.add("visible");
+  });
+}
+
 export function initRevealAnimations() {
   const revealSections = document.querySelectorAll(".section-content");
 
   // JSが有効な場合にのみ初期非表示化クラスを適用
   revealSections.forEach((section) => {
-    section.classList.add("reveal-init");
-
     // 見出し（h2）に演出クラスを適用
     const heading = section.querySelector("h2");
     if (heading) heading.classList.add("reveal-title");
@@ -24,6 +42,13 @@ export function initRevealAnimations() {
     section.querySelectorAll(".topic-inline-photo").forEach((photo) => {
       photo.classList.add("reveal-photo");
     });
+
+    // ★ リロード対策: ビューポート内のセクションは即座に表示（アニメーションなし）
+    if (isInViewport(section)) {
+      revealImmediately(section);
+    } else {
+      section.classList.add("reveal-init");
+    }
   });
 
   // セクション全体のスライドイン（IntersectionObserver）
@@ -41,7 +66,10 @@ export function initRevealAnimations() {
   });
 
   revealSections.forEach((section) => {
-    sectionObserver.observe(section);
+    // 既に表示済みのセクションはobserve不要
+    if (!section.classList.contains("reveal")) {
+      sectionObserver.observe(section);
+    }
   });
 
   // 子要素の時差つきフェードイン（IntersectionObserver）
@@ -68,8 +96,11 @@ export function initRevealAnimations() {
     rootMargin: "0px 0px -30px 0px"
   });
 
+  // 既に表示済みの子要素はobserve不要
   document.querySelectorAll(".reveal-child, .reveal-title, .reveal-card, .reveal-photo").forEach((el) => {
-    childObserver.observe(el);
+    if (!el.classList.contains("visible")) {
+      childObserver.observe(el);
+    }
   });
 
   // セクション内コンテンツのパララックス効果（スクロール速度差）

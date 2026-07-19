@@ -4,6 +4,7 @@ export function initScrollspy() {
   const sections = document.querySelectorAll(".section-content, .hero");
   const navLinks = document.querySelectorAll(".nav-link");
   const header = document.querySelector("#siteHeader");
+  let lastActiveId = ""; // 前回のアクティブなIDを記憶
 
   window.addEventListener("scroll", () => {
     let currentId = "";
@@ -31,11 +32,13 @@ export function initScrollspy() {
       const isActive = href === currentId;
       link.classList.toggle("active", isActive);
 
-      // モバイル時にアクティブなタブを自動スクロールで表示位置に持ってくる
-      if (isActive && window.innerWidth < 900) {
+      // モバイル時にアクティブなタブが切り替わった瞬間のみ、自動スクロールで表示位置に持ってくる
+      if (isActive && currentId !== lastActiveId && window.innerWidth < 900) {
         link.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
       }
     });
+
+    lastActiveId = currentId;
   });
 
   // スムーズスクロールイベントの紐付け（横方向のズレを防ぐため、縦方向のみスクロール）
