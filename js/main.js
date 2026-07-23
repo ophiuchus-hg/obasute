@@ -109,6 +109,7 @@ function initKataribeGallery() {
 function initNohGallery() {
   const posterImg = document.querySelector("#nohPosterImg");
   const moonImg = document.querySelector("#nohMoonImg");
+  const himebotaruImg = document.querySelector("#nohHimebotaruImg");
   
   if (posterImg) {
     posterImg.addEventListener("click", () => {
@@ -118,6 +119,11 @@ function initNohGallery() {
   if (moonImg) {
     moonImg.addEventListener("click", () => {
       openLightbox({ src: "assets/noh_moon.jpg", alt: "更級の満月と歴史的建造物（煙突と赤レンガ）" }, "noh");
+    });
+  }
+  if (himebotaruImg) {
+    himebotaruImg.addEventListener("click", () => {
+      openLightbox({ src: "assets/noh_himebotaru.png", alt: "冠着山の姫ボタル（発光）" }, "noh");
     });
   }
 }

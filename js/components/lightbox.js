@@ -73,7 +73,8 @@ function buildPhotoList(galleryKey, activePhoto, bookletPages) {
       { src: "assets/noh_sitting.jpg", alt: "能「姨捨」舞台写真（着座）" },
       { src: "assets/noh_dancing.png", alt: "能「姨捨」舞台写真（舞）" },
       { src: "assets/noh_poster.jpg", alt: "謡曲「姨捨」イメージ（秋乃月とシテ）" },
-      { src: "assets/noh_moon.jpg", alt: "更級の満月と歴史的建造物（煙突と赤レンガ）" }
+      { src: "assets/noh_moon.jpg", alt: "更級の満月と歴史的建造物（煙突と赤レンガ）" },
+      { src: "assets/noh_himebotaru.png", alt: "冠着山の姫ボタル（発光）" }
     ];
   } else if (galleryKey === "booklet") {
     // 冊子の全ページを対象にする
