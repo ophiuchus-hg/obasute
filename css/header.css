@@ -46,15 +46,18 @@
 
 .site-nav {
   display: flex;
-  gap: 20px;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .nav-link {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--muted);
   position: relative;
   padding: 6px 0;
+  white-space: nowrap;
 }
 
 .nav-link::after {

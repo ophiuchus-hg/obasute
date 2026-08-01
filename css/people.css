@@ -54,6 +54,7 @@
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 30px;
+  margin-top: 50px;
   box-shadow: var(--shadow);
 }
 
@@ -185,5 +186,53 @@
   color: white;
   transform: scale(1.1);
 }
+
+/* 保存する会ブロック */
+.association-box {
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 30px;
+  margin: 50px 0;
+  box-shadow: var(--shadow);
+}
+
+.association-box h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: var(--forest-dark);
+  font-family: "Noto Serif JP", serif;
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 8px;
+  display: inline-block;
+}
+
+.association-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.association-item {
+  line-height: 1.7;
+}
+
+.association-heading {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--forest);
+  margin: 0 0 6px 0;
+  font-family: "Noto Serif JP", serif;
+}
+
+.association-text {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.8;
+  padding-left: 12px;
+}
+
 
 

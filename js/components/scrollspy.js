@@ -1,7 +1,7 @@
 // Scrollspy と スティッキーヘッダー
 
 export function initScrollspy() {
-  const sections = document.querySelectorAll(".section-content, .hero");
+  const sections = document.querySelectorAll(".section-content, .section-sub-block, .hero");
   const navLinks = document.querySelectorAll(".nav-link");
   const header = document.querySelector("#siteHeader");
   let lastActiveId = ""; // 前回のアクティブなIDを記憶

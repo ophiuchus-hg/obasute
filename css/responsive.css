@@ -7,7 +7,8 @@
   }
 
   .site-header.menu-open {
-    height: 390px; /* メニュー展開時の高さ */
+    height: auto;
+    padding-bottom: 15px;
   }
 
   html {
