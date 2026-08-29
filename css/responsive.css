@@ -167,8 +167,10 @@
   }
 
   .kataribe-photo {
+    width: 100%;
+    max-width: 460px;
     height: auto;
-    aspect-ratio: 16/9;
+    margin: 0 auto;
   }
 
   .kataribe-sub {

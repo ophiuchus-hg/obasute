@@ -9,20 +9,22 @@
 .kataribe-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
-  gap: 16px;
+  gap: 20px;
   width: 100%;
+  align-items: center;
 }
 
 .kataribe-main {
   display: flex;
-  align-items: stretch;
+  align-items: center;
+  justify-content: center;
 }
 
 .kataribe-photo {
   width: 100%;
-  max-width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 460px;
+  height: auto;
+  object-fit: contain;
   border-radius: 8px;
   border: 4px solid var(--paper-strong);
   box-shadow: 0 8px 24px rgba(25, 35, 28, 0.08);
