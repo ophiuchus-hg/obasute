@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ophiuchus-hg.github.io/obasute/sitemap.xml
+Sitemap: https://kamurikiyama.org/sitemap.xml
