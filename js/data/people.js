@@ -16,12 +16,13 @@ export const peopleData = [
   {
     title: "ギター工房「上水」",
     img: "assets/people/guitar.jpg",
-    url: "assets/people/homepage-articles-continued.pdf",
+    url: "assets/people/kamimizu-guitar-workshop.pdf",
     description: "冠着山の麓にあるギター工房を紹介する記事です。姨捨の棚田の傍らで育った上水清さんが、手作りギターの制作に取り組む歩みや、工房を訪れる人々との交流、ギター製作への思いを掲載しています。",
   },
   {
     title: "財産区",
-    img: "assets/people/zaisanku.jpg",
+    imgs: ["assets/people/zaisanku.jpg", "assets/people/zaisanku-map.jpg"],
+    imgAlts: ["財産区有林での林業・整備作業風景", "冠着山北斜面 財産区有林の範囲地図"],
     description: "冠着山北斜面一帯は、松代藩の領地であった。\nその当時から麓の住民には入会地として認められていた。\nその後、廃藩置県によってこの一帯は入会権が認められていた\n若宮、羽尾、須坂、上徳間、内川、千本柳地区(当財産区)の管理下に置かれた。\n\n冠着山の北斜面約360ヘクタールの財産区有林の計画的な間伐搬出を行うとともに、より高品質な木材を生産するため、積極的に財産区有林内の下刈り、幼齢木の保護を行っている。\n\n当財産区議会議長が「冠着山の自然と文化遺産を保存する会」の会長に就任するなど、両団体との連携のもと、冠着山にまつわるいろいろの活動を行っている。\n\n平成29年　8月11日(金)　山の日(国民の休日)\n林間学校「冠着山わくわく自然学校」を開校。\n会場　「坊城平いこいの森」冠着山の高原地帯"
   },
   {
@@ -47,5 +48,10 @@ export const linksData = [
     title: "さらしなルネサンス",
     url: "https://sarashina-r.com", // 外部URLに変更。必要に応じて調整
     description: "日本遺産「月の都」となった長野県千曲市・さらしなの里の文化や活動を紹介するサイトです。",
+  },
+  {
+    title: "信州千曲観光局",
+    url: "https://chikuma-kanko.com/page/9/",
+    description: "長野県千曲市の観光情報（名所、絶景、温泉、イベント情報など）をお届けする信州千曲観光局の公式サイトです。",
   }
 ];

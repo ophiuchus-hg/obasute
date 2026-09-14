@@ -3,3 +3,5 @@ assets/*.docx
 assets/booklet-pages/*.pdf
 tools/
 .tmp-*/
+*-backup/
+*-backup.pdf

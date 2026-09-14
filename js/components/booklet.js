@@ -55,7 +55,7 @@ export function initBooklet() {
 
       btn.append(img, span);
       btn.addEventListener("click", () => {
-        goToPage(index);
+        goToPage(index, { fromThumbnail: true });
       });
 
       // 左右矢印キーでのサムネイル選択移動（右開きに追従）
@@ -158,24 +158,33 @@ function clampPageIndex(index) {
   return Math.min(Math.max(index, 0), Math.max(bookletPages.length - 1, 0));
 }
 
-function renderBooklet(isInitial = false) {
+function renderBooklet(isInitial = false, options = {}) {
   if (!bookletReader || !bookletPages.length) return;
 
   currentPageIndex = clampPageIndex(currentPageIndex);
   const isSpread = shouldShowSpread();
 
   // 見開き表示の場合のインデックス算出
-  // 表紙（0）は1枚。1ページ目以降は右開き：右が若いページ、左が次のページ
+  // 表紙（0）は1枚。最後のページ（偶数総数なら裏表紙）も1枚。
+  // その他のページは右開き：右が若いページ、左が次のページ
   let leftIndex = -1;
   let rightIndex = currentPageIndex;
 
   if (isSpread) {
-    if (currentPageIndex % 2 === 0) {
-      // 偶数ページ（左側）
+    if (currentPageIndex === 0) {
+      // 表紙（単独表示）
+      leftIndex = 0;
+      rightIndex = -1;
+    } else if (currentPageIndex === bookletPages.length - 1 && bookletPages.length % 2 === 0) {
+      // 裏表紙（単独表示）
+      leftIndex = currentPageIndex;
+      rightIndex = -1;
+    } else if (currentPageIndex % 2 === 0) {
+      // 偶数インデックス（左側）
       leftIndex = currentPageIndex;
       rightIndex = currentPageIndex - 1;
     } else {
-      // 奇数ページ（右側）
+      // 奇数インデックス（右側）
       leftIndex = currentPageIndex + 1 < bookletPages.length ? currentPageIndex + 1 : -1;
       rightIndex = currentPageIndex;
     }
@@ -192,8 +201,8 @@ function renderBooklet(isInitial = false) {
   setPageSlot(leftPageSlot, leftPageImage, leftPageCaption, leftPage, leftIndex);
   setPageSlot(rightPageSlot, rightPageImage, rightPageCaption, rightPage, rightIndex);
 
-  // 見開き時のリーダー幅クラス適用
-  bookletReader.classList.toggle("single-page", !isSpread || !rightPage);
+  // 見開き時のリーダー幅クラス適用（片面のみの場合は single-page）
+  bookletReader.classList.toggle("single-page", !isSpread || !rightPage || !leftPage);
 
   // ボタンの有効／無効制御
   if (prevButton) prevButton.disabled = currentPageIndex === 0;
@@ -205,24 +214,61 @@ function renderBooklet(isInitial = false) {
 
   // サムネイルのアクティブ状態の更新
   const thumbnails = document.querySelectorAll("#bookletThumbnails button");
+  let targetThumbToScroll = null;
+
   thumbnails.forEach((thumb, idx) => {
     // HTML上は逆順（P.36が左、P.1が右）に並んでいるため、DOMのインデックス（idx）を元のページインデックス（0〜）に換算します
     const pageIndex = bookletPages.length - 1 - idx;
     const isActive = pageIndex === leftIndex || (rightIndex >= 0 && pageIndex === rightIndex);
     thumb.classList.toggle("active", isActive);
 
-    if (isActive && thumbnailContainer) {
-      // 縦スクロールを誘発する標準の scrollIntoView の使用を避け、横スクロールのみを制御する
-      const containerWidth = thumbnailContainer.clientWidth;
-      const thumbLeft = thumb.offsetLeft;
-      const thumbWidth = thumb.clientWidth;
-      const targetScrollLeft = thumbLeft - (containerWidth / 2) + (thumbWidth / 2);
-
-      thumbnailContainer.scrollTo({
-        left: targetScrollLeft,
-        behavior: isInitial ? "auto" : "smooth"
-      });
+    // スクロール対象のサムネイルを選択（見開きの場合は右側ページ＝若いページを優先）
+    if (isActive && !targetThumbToScroll) {
+      if (rightIndex >= 0 && pageIndex === rightIndex) {
+        targetThumbToScroll = thumb;
+      } else if (pageIndex === leftIndex) {
+        targetThumbToScroll = thumb;
+      }
     }
+  });
+
+  if (thumbnailContainer && targetThumbToScroll) {
+    scrollThumbnailIntoView(targetThumbToScroll, {
+      isInitial,
+      fromThumbnail: options.fromThumbnail || false
+    });
+  }
+}
+
+function scrollThumbnailIntoView(thumb, { isInitial = false, fromThumbnail = false } = {}) {
+  if (!thumbnailContainer || !thumb) return;
+
+  const containerRect = thumbnailContainer.getBoundingClientRect();
+  const thumbRect = thumb.getBoundingClientRect();
+
+  // 既にコンテナの可視範囲内にあるか判定（左右16pxのマージン考慮）
+  const isFullyVisible = (
+    thumbRect.left >= containerRect.left + 16 &&
+    thumbRect.right <= containerRect.right - 16
+  );
+
+  // サムネイルクリック時で、既に画面内に見えているなら強制スクロールしない
+  if (fromThumbnail && isFullyVisible) {
+    return;
+  }
+
+  // コンテナ基準の正確な位置を算出
+  const currentScrollLeft = thumbnailContainer.scrollLeft;
+  const thumbRelativeLeft = thumbRect.left - containerRect.left + currentScrollLeft;
+  const targetScrollLeft = thumbRelativeLeft - (thumbnailContainer.clientWidth / 2) + (thumbRect.width / 2);
+
+  // 端の限界値（0 〜 maxScroll）内に収める
+  const maxScroll = thumbnailContainer.scrollWidth - thumbnailContainer.clientWidth;
+  const clampedScrollLeft = Math.max(0, Math.min(targetScrollLeft, maxScroll));
+
+  thumbnailContainer.scrollTo({
+    left: clampedScrollLeft,
+    behavior: isInitial ? "auto" : "smooth"
   });
 }
 
@@ -268,12 +314,12 @@ function setPageSlot(slot, image, caption, page, index) {
   }, 50);
 }
 
-function goToPage(index) {
+function goToPage(index, options = {}) {
   if (index !== currentPageIndex) {
     lastDirection = index > currentPageIndex ? "next" : "prev";
   }
   currentPageIndex = clampPageIndex(index);
-  renderBooklet();
+  renderBooklet(false, options);
 }
 
 function movePage(direction) {

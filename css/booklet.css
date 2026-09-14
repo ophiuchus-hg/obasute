@@ -92,6 +92,7 @@
 
 /* サムネイルストリップ */
 .thumbnail-strip {
+  position: relative;
   display: flex;
   gap: 12px;
   padding: 16px 8px;

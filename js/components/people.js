@@ -1,6 +1,16 @@
 // 人々とリンクの描画
 
 import { peopleData, linksData } from "../data/people.js";
+import { openLightbox } from "./lightbox.js";
+
+function setupImageLightbox(img, src, alt) {
+  img.style.cursor = "zoom-in";
+  img.addEventListener("click", (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    openLightbox({ src, alt }, "people");
+  });
+}
 
 export function renderPeopleAndLinks() {
   const peopleContainer = document.querySelector("#peopleItems");
@@ -28,8 +38,9 @@ export function renderPeopleAndLinks() {
         if (item.img) {
           const img = document.createElement("img");
           img.src = item.img;
-          img.alt = `${item.title}`;
+          img.alt = (item.imgAlts && item.imgAlts[0]) || `${item.title}`;
           img.className = "related-link-img";
+          setupImageLightbox(img, item.img, img.alt);
           container.append(img);
         } else if (item.imgs && item.imgs.length >= 2) {
           if (item.title.includes("ずくなし農園")) {
@@ -67,8 +78,9 @@ export function renderPeopleAndLinks() {
           } else {
             const img1 = document.createElement("img");
             img1.src = item.imgs[0];
-            img1.alt = `${item.title}`;
+            img1.alt = (item.imgAlts && item.imgAlts[0]) || `${item.title}`;
             img1.className = "related-link-img";
+            setupImageLightbox(img1, item.imgs[0], img1.alt);
             container.append(img1);
           }
         }
@@ -91,9 +103,10 @@ export function renderPeopleAndLinks() {
           for (let i = 1; i < item.imgs.length; i++) {
             const img = document.createElement("img");
             img.src = item.imgs[i];
-            img.alt = `${item.title} ${i + 1}`;
+            img.alt = (item.imgAlts && item.imgAlts[i]) || `${item.title} ${i + 1}`;
             img.className = "related-link-img";
             img.style.marginTop = "12px";
+            setupImageLightbox(img, item.imgs[i], img.alt);
             container.append(img);
           }
         }
